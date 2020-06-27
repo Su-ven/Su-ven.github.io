@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="cmn-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="随手记录，随缘分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://suven.cn/categories/index.html">
+<meta property="og:site_name" content="Suven&#39;s blog">
+<meta property="og:description" content="随手记录，随缘分享">
+<meta property="og:locale" content="cmn-Hans">
+<meta property="og:updated_time" content="2020-06-27T08:20:32.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分类">
+<meta name="twitter:description" content="随手记录，随缘分享">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://suven.cn/categories/">
+
+
+
+
+
+  <title>javascript的几种遍历循环方法及其性能对比 | Suven's blog</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+    body{
+      min-height: 100vh;
+    }
+
+    #bg_canvas{
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="cmn-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Suven's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://suven.cn/2019/08/25/javascript的几种遍历循环方法及其性能对比/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Suven">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suven's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">javascript的几种遍历循环方法及其性能对比</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-25T19:27:58+08:00">2019-08-25</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  通过一系列的数据来测试javascript的几种循环的性能差异
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>及本文落笔为止， 时间为2019.08.22，javascript发展到目前，除了我们ES5中带有的<code>for</code>, <code>for-in</code>, <code>while</code>, <code>do-while</code>之外，ES6更是扩展出了 <code>forEach</code>, <code>map</code>, <code>some</code>等方法。下面来逐一演示各种方法，并对其性能进行数据统计分析。</p>
+<h2 id="方法实例"><a href="#方法实例" class="headerlink" title="方法实例"></a>方法实例</h2><p>为了方便进行测试操作，我们这里先定义一个数据。为了保证期运行的时间足够长，我定义数组的长度为 <code>10000000</code></p>
+<pre><code>let n = 10000000, arr = []
+for(let i=0; i&lt;n; i++){
+  arr[i] = i+1
+}
+</code></pre><h3 id="for循环-标准"><a href="#for循环-标准" class="headerlink" title="for循环(标准)"></a>for循环(标准)</h3><p>既是我们一般常用的for循环方法。</p>
+<pre><code>for(let i=0; i&lt;arr.length; i++){
+  arr[i] = arr[i]+1
+}
+</code></pre><h3 id="for循环-缓存"><a href="#for循环-缓存" class="headerlink" title="for循环(缓存)"></a>for循环(缓存)</h3><p>这种写法是先把数组的长度缓存到一个变量中，这样每次循环的时候就没必要再去读取数据的长度，可以直接读取变量</p>
+<pre><code>for(let i=0, j=arr.length; i&lt;j; i++){
+  arr[i] = arr[i]+1
+}
+</code></pre><h3 id="for循环-倒序"><a href="#for循环-倒序" class="headerlink" title="for循环(倒序)"></a>for循环(倒序)</h3><p>这种写法是先获取到数组的长度，赋予变量，每次循环后对变量减1，直到循环完成。这样整循环中只创建了一个变量，并且不需要每次循环都去读取数组长度</p>
+<pre><code>for(let i=arr.length; i--;){
+  arr[i] = arr[i]+1
+}
+</code></pre><h3 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h3><p>while循环会先判断循环条件，条件符合才会进入循环</p>
+<pre><code>var num = 0
+while(num&lt;arr.length){
+  arr[num] = arr[num]+1
+  num ++
+}
+</code></pre><h3 id="do…while循环"><a href="#do…while循环" class="headerlink" title="do…while循环"></a>do…while循环</h3><p>do…while循环与while循环刚好相反，会先进行循环方法，然后再判断循环条件。如果条件不满足，则中止循环</p>
+<pre><code>var num = 0
+do{
+  arr[num] = arr[num] + 1
+  num ++
+}while(num &lt; arr.length)
+</code></pre><h3 id="for…in-循环"><a href="#for…in-循环" class="headerlink" title="for…in 循环"></a>for…in 循环</h3><p>for…in 循环更多用于Object类型，可获取Object的key。 由于在javascript中，一切皆对象，数组本质上也是一个对象，因此也可以使用for…in来对数组进行遍历。此时获取的key则为数组的索引</p>
+<pre><code>for (let i in arr){
+  arr[i] = arr[i] + 1
+}
+</code></pre><h3 id="forEach-循环"><a href="#forEach-循环" class="headerlink" title="forEach()循环"></a>forEach()循环</h3><p>forEach是ES6扩展的新语法。该方法遍历数组中的每一个元素并执行提供的回调函数。</p>
+<blockquote>
+<p>注: forEach 不会对空数组执行回调。例: <code>[0,,2].forEach()</code> 只会执行两次回调<br>forEach() 只对数组类型有效<br>forEach() 不会改变原始数组<br>如果数组的元素是一个对象，在 forEach中对对象的value进行加减，是会影响到原始数据的</p>
+</blockquote>
+<pre><code>arr.forEach(item =&gt; {item = item + 1})
+</code></pre><h3 id="map-循环"><a href="#map-循环" class="headerlink" title="map()循环"></a>map()循环</h3><p>map是ES6扩展的新语法。map方法返回一个新数组，为原始数组调用函数处理后的值(forEach循环无返回)</p>
+<blockquote>
+<p>map 不会对空数组执行回调<br>forEach() 只对数组类型有效<br>map 不会改变原始数组<br>如果数组的元素是一个对象，在 map中对对象的value进行加减，是会影响到原始数据的</p>
+</blockquote>
+<pre><code>arr.map(item =&gt; {item = item + 1})
+</code></pre><h3 id="some"><a href="#some" class="headerlink" title="some()"></a>some()</h3><p>some() 可以遍历数组，至少有一个元素通过提供的函数方法，some() 返回 <code>true</code>， 否则返回 <code>false</code></p>
+<blockquote>
+<p>对于空数组，无论任何条件，都会返回false<br>只对数组类型有效</p>
+</blockquote>
+<pre><code>arr.some(item =&gt; item &gt; 110000000)
+</code></pre><h3 id="every"><a href="#every" class="headerlink" title="every()"></a>every()</h3><p>every() 可以遍历数组，数组内所有的元素都通过提供的函数方法，则返回 <code>true</code> ，否则返回 <code>false</code></p>
+<blockquote>
+<p>对于空数组，无论任何条件，都会返回false<br>只对数组类型有效</p>
+</blockquote>
+<pre><code>arr.every(item =&gt; item &gt; 110000000)
+</code></pre><h3 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h3><p>遍历数组，并过滤出通过函数条件的元素，返回一个新数组</p>
+<blockquote>
+<p>如无元素通过条件，则返回一个空数组<br>只对数组类型有效</p>
+</blockquote>
+<pre><code>arr.filter(item =&gt; item%2===0)
+</code></pre><h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h3><p>对于数组内所有的元素执行都提供的函数方法，最后返回所有元素的加总值。(升序)</p>
+<pre><code>arr.reduce((a,b) =&gt; a+b)
+</code></pre><h3 id="reduceRight"><a href="#reduceRight" class="headerlink" title="reduceRight()"></a>reduceRight()</h3><p>用法与 <code>reduce()</code> 方法一样， <code>reduceRight()</code>方法是以降序的方式进行处理</p>
+<pre><code>arr.reduce((a,b) =&gt; a+b)
+</code></pre><h3 id="Object-keys"><a href="#Object-keys" class="headerlink" title="Object.keys()"></a>Object.keys()</h3><p>keys()方法为对象的处理方法，把对象的key提取为一个数组。由于js的特殊性，因此 keys() 也可以补用于数组的处理</p>
+<pre><code>Object.keys(arr)
+</code></pre><h3 id="Object-values"><a href="#Object-values" class="headerlink" title="Object.values()"></a>Object.values()</h3><p>values()方法为对象的处理方法，把对象所有元素的value提取为一个数组。由于js的特殊性，因此 values() 也可以补用于数组的处理</p>
+<pre><code>Object.values(arr)
+</code></pre><h3 id="Object-entries"><a href="#Object-entries" class="headerlink" title="Object.entries()"></a>Object.entries()</h3><p>entries()方法为对象的处理方法。该方法返回一个可枚举的数组，数组包含对象的键值对。由于js的特殊性，因此 entries() 也可以补用于数组的处理</p>
+<pre><code>Object.entries(arr)
+</code></pre><h3 id="Object-getOwnPropertyNames"><a href="#Object-getOwnPropertyNames" class="headerlink" title="Object.getOwnPropertyNames()"></a>Object.getOwnPropertyNames()</h3><p>getOwnPropertyNames()方法返回一个数组，该数组元素包含了对象自身拥有的可枚举或不可枚举属性的名称(key, 索引等)。</p>
+<pre><code>Object.getOwnPropertyNames(arr)
+</code></pre><h2 id="关于性能"><a href="#关于性能" class="headerlink" title="关于性能"></a>关于性能</h2><p>这里把代码分别在 chrome, firefox, edge 三个浏览器中运行5次，并统计各自的运行时间。</p>
+<p><img src="https://github.com/starriness/blog-images/blob/master/javascript%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E5%BE%AA%E7%8E%AF%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94/1.png?raw=true" alt="(图一)"><br><img src="https://github.com/starriness/blog-images/blob/master/javascript%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E5%BE%AA%E7%8E%AF%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94/2.png?raw=true" alt="(图二)"><br><img src="https://github.com/starriness/blog-images/blob/master/javascript%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E5%BE%AA%E7%8E%AF%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94/3.png?raw=true" alt="(图三)"><br><img src="https://github.com/starriness/blog-images/blob/master/javascript%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E5%BE%AA%E7%8E%AF%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94/4.png?raw=true" alt="(图四)"><br><img src="https://github.com/starriness/blog-images/blob/master/javascript%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E5%BE%AA%E7%8E%AF%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94/5.png?raw=true" alt="(图五)"><br><img src="https://github.com/starriness/blog-images/blob/master/javascript%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E5%BE%AA%E7%8E%AF%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94/6.png?raw=true" alt="(图六)"><br><img src="https://github.com/starriness/blog-images/blob/master/javascript%E7%9A%84%E5%87%A0%E7%A7%8D%E9%81%8D%E5%8E%86%E5%BE%AA%E7%8E%AF%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94/7.png?raw=true" alt="(图七)"></p>
+<p>通过数据对比我们可以得知:</p>
+<ol>
+<li>for循环以及while, do…while循环 耗时相差几乎相等，for循环的缓存写法，在Edge浏览器下处理得比其他几种写法要优越一点点。</li>
+<li>forEach耗时比map的耗时要少，但是比for 和 while循环耗时要高一些</li>
+<li>for … in 循环耗时很高，尤其是在 firefox 浏览器下表现尤其糟糕</li>
+<li>some, every, filter三个中， 耗时顺序: filter&gt;some&gt;every。</li>
+<li>在chome中，reduceRight 的耗时要高于 reduce 耗时，Edge中两者相差不大，firefox中 reduceRight 低于 reduce</li>
+<li>keys , values , entries 的耗时依次递增。 entries 在 chrome 以及 Edge 中是最高耗时</li>
+<li>getOwnPropertyNames 耗时介于keys 和values之间</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/循环/" rel="tag"># 循环</a>
+          
+            <a href="/tags/性能/" rel="tag"># 性能</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/17/画线/" rel="next" title="画线">
+                <i class="fa fa-chevron-left"></i> 画线
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/27/利用python进行文件批量重命名/" rel="prev" title="利用python进行文件批量重命名">
+                利用python进行文件批量重命名 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Suven</p>
+              <p class="site-description motion-element" itemprop="description">随手记录，随缘分享</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法实例"><span class="nav-number">1.</span> <span class="nav-text">方法实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for循环-标准"><span class="nav-number">1.1.</span> <span class="nav-text">for循环(标准)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for循环-缓存"><span class="nav-number">1.2.</span> <span class="nav-text">for循环(缓存)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for循环-倒序"><span class="nav-number">1.3.</span> <span class="nav-text">for循环(倒序)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#while循环"><span class="nav-number">1.4.</span> <span class="nav-text">while循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#do…while循环"><span class="nav-number">1.5.</span> <span class="nav-text">do…while循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for…in-循环"><span class="nav-number">1.6.</span> <span class="nav-text">for…in 循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#forEach-循环"><span class="nav-number">1.7.</span> <span class="nav-text">forEach()循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map-循环"><span class="nav-number">1.8.</span> <span class="nav-text">map()循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#some"><span class="nav-number">1.9.</span> <span class="nav-text">some()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#every"><span class="nav-number">1.10.</span> <span class="nav-text">every()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#filter"><span class="nav-number">1.11.</span> <span class="nav-text">filter()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reduce"><span class="nav-number">1.12.</span> <span class="nav-text">reduce()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reduceRight"><span class="nav-number">1.13.</span> <span class="nav-text">reduceRight()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-keys"><span class="nav-number">1.14.</span> <span class="nav-text">Object.keys()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-values"><span class="nav-number">1.15.</span> <span class="nav-text">Object.values()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-entries"><span class="nav-number">1.16.</span> <span class="nav-text">Object.entries()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-getOwnPropertyNames"><span class="nav-number">1.17.</span> <span class="nav-text">Object.getOwnPropertyNames()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于性能"><span class="nav-number">2.</span> <span class="nav-text">关于性能</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Suven</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  <canvas id="bg_canvas"></canvas>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script>
+    let w, h;
+    const OPTIONS = {
+      speed: null,
+      color: null,
+      radius: 4,
+      lineWidth: 0.5,
+      distance: 150,
+    }
+
+    class Circle{
+      constructor(ctx){
+        this.ctx = ctx;
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.speed = OPTIONS.speed || 1;
+        this.color = OPTIONS.color || `rgba(200, 200, 200, 1)`;
+        this.radius = Math.floor(Math.random()*OPTIONS.radius) || Math.floor(Math.random()*2);
+        this.vector = {
+          x: Math.cos(Math.floor(Math.random()*360))*this.speed,
+          y: Math.sin(Math.floor(Math.random()*360))*this.speed
+        };
+      }
+
+      rule(){
+        if (this.x >= w || this.x <= 0){
+          this.vector.x *= -1;
+        }
+
+        if (this.y >= h || this.y <= 0) {
+          this.vector.y *= -1;
+        }
+
+        if (this.x > w) { this.x = w }
+        if (this.x < 0) { this.x = 0 }
+        if (this.y > h) { this.y = h }
+        if (this.y < 0) { this.y = 0 }
+      }
+
+      draw(){
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.restore();
+      }
+
+      update(){
+        this.rule();
+        this.x += this.vector.x;
+        this.y += this.vector.y;
+      }
+    }
+
+    var link = (circle, circles, ctx) => {
+      for (let i = 0; i < circles.length; i++) {
+        let distancex = Math.abs(circles[i].x - circle.x);
+        let distancey = Math.abs(circles[i].y - circle.y);
+        let distance = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
+        if (distance <= Math.floor((OPTIONS.distance/1920)*window.innerWidth)) {
+          ctx.lineWidth = OPTIONS.lineWidth || 0.5;
+          ctx.strokeStyle = `rgba(200, 200, 200, ${1-distance/Math.floor((250/1920)*window.innerWidth)})`;
+          ctx.beginPath();
+          ctx.moveTo(circle.x, circle.y);
+          ctx.lineTo(circles[i].x, circles[i].y);
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+    }
+
+    var initStage = (target) => {
+      const canvas = document.querySelector(target);
+      if (!canvas) {
+        console.error('请输入正确的canvas');
+        return ;
+      }
+      const ctx = canvas.getContext('2d');
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      let circles = [];
+      let drawCircle = new Circle();
+      for(let i = 0; i < 100; i++){
+        circles.push(new Circle(ctx))
+      }
+
+      (function run(){
+        ctx.clearRect(0,0,w,h);
+        circles.forEach(item => {
+          item.draw();
+          item.update();
+        })
+
+        circles.forEach(item => {
+          link(item, circles, ctx);
+        })
+        window.requestAnimationFrame(run);
+      })()
+    }
+
+    window.addEventListener('resize', ()=>{
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    })
+
+    initStage('#bg_canvas');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"react":{"opacityDefault":1},"log":false,"tagMode":false});</script></body>
+</html>

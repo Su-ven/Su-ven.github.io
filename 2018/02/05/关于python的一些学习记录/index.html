@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="cmn-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="随手记录，随缘分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://suven.cn/categories/index.html">
+<meta property="og:site_name" content="Suven&#39;s blog">
+<meta property="og:description" content="随手记录，随缘分享">
+<meta property="og:locale" content="cmn-Hans">
+<meta property="og:updated_time" content="2020-06-27T08:20:32.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分类">
+<meta name="twitter:description" content="随手记录，随缘分享">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://suven.cn/categories/">
+
+
+
+
+
+  <title>关于python的一些学习记录 | Suven's blog</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+    body{
+      min-height: 100vh;
+    }
+
+    #bg_canvas{
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="cmn-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Suven's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://suven.cn/2018/02/05/关于python的一些学习记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Suven">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suven's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关于python的一些学习记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T15:11:18+08:00">2018-02-05</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  在学习python中遇到的一些点和注意的东西随手记录着...
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="随手记"><a href="#随手记" class="headerlink" title="随手记"></a>随手记</h2><p><a href="https://www.python.org/" target="_blank" rel="noopener">官网</a><br><a href="https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe" target="_blank" rel="noopener">下载链</a></p>
+<hr>
+<h4 id="关于python安装"><a href="#关于python安装" class="headerlink" title="关于python安装"></a>关于python安装</h4><p>安装完后，输入 python， 如果进入<br>(图片一)<br>所示<br>则是已经完成了python的安装<br>否则，在安装中需要勾上 <strong>Add Python 3.6 to PATH</strong><br>如果含有 <strong>Disable path length limit</strong> 的提示，可点击勾上  </p>
+<hr>
+<h4 id="关于程序"><a href="#关于程序" class="headerlink" title="关于程序"></a>关于程序</h4><p>使用print()函数进行输出,例:  </p>
+<pre><code>print (&apos;hello world&apos;);
+</code></pre><p>使用规则类似常规程序语言，这里不多赘述  </p>
+<p>使用input()指令进行输入，例：</p>
+<pre><code>name = input()
+print(&apos;hello,&apos;, name)
+</code></pre><p>以上代码可写入 test.py 文件中，然后在文件当前路径下使用 python test.py 指令运行文件。  </p>
+<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><h4 id="变量的概念基本上和初中代数的方程变量是一致的，只是在计算机程序中，变量不仅可以是数字，还可以是任意数据类型。"><a href="#变量的概念基本上和初中代数的方程变量是一致的，只是在计算机程序中，变量不仅可以是数字，还可以是任意数据类型。" class="headerlink" title="变量的概念基本上和初中代数的方程变量是一致的，只是在计算机程序中，变量不仅可以是数字，还可以是任意数据类型。"></a>变量的概念基本上和初中代数的方程变量是一致的，只是在计算机程序中，变量不仅可以是数字，还可以是任意数据类型。</h4><p>变量在程序中就是用一个变量名表示了，变量名必须是大小写英文、数字和_的组合，且不能用数字开头，比如：</p>
+<pre><code>a = 1
+</code></pre><h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p>len()函数可以计算字符串的字符数，如果换成bytes，len()函数就计算字节数, 例： </p>
+<pre><code>len(&apos;ABC&apos;)
+len(&apos;中文&apos;)
+len(b&apos;ABC&apos;)
+len(&apos;中文&apos;.encode(&apos;utf-8&apos;))
+</code></pre><h4 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h4><h4 id="最后一个常见的问题是如何输出格式化的字符串。我们经常会输出类似’亲爱的xxx你好！你xx月的话费是xx，余额是xx’之类的字符串，而xxx的内容都是根据变量变化的，所以，需要一种简便的格式化字符串的方式"><a href="#最后一个常见的问题是如何输出格式化的字符串。我们经常会输出类似’亲爱的xxx你好！你xx月的话费是xx，余额是xx’之类的字符串，而xxx的内容都是根据变量变化的，所以，需要一种简便的格式化字符串的方式" class="headerlink" title="最后一个常见的问题是如何输出格式化的字符串。我们经常会输出类似’亲爱的xxx你好！你xx月的话费是xx，余额是xx’之类的字符串，而xxx的内容都是根据变量变化的，所以，需要一种简便的格式化字符串的方式"></a>最后一个常见的问题是如何输出格式化的字符串。我们经常会输出类似’亲爱的xxx你好！你xx月的话费是xx，余额是xx’之类的字符串，而xxx的内容都是根据变量变化的，所以，需要一种简便的格式化字符串的方式</h4><p>在Python中，采用的格式化方式和C语言是一致的，用%实现，举例如下：</p>
+<pre><code>&gt;&gt;&gt; &apos;Hi, %s, you have $%d.&apos; % (&apos;Michael&apos;, 1000000)
+&apos;Hi, Michael, you have $1000000.&apos;
+</code></pre><p>常见的占位符有：</p>
+<table>
+<thead>
+<tr>
+<th>占位符</th>
+<th>替换内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%d</td>
+<td>整数</td>
+</tr>
+<tr>
+<td>%f</td>
+<td>浮点数</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>字符串</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>十六进制整数</td>
+</tr>
+</tbody>
+</table>
+<p>其中，格式化整数和浮点数还可以指定是否补0和整数与小数的位数：    </p>
+<pre><code>&gt;&gt; print(&apos;%2d-%02d&apos; % (3, 1))
+3-01
+&gt;&gt; print(&apos;%.2f&apos; % 3.1415926)
+3.14
+</code></pre><p>字符串里本身含有%这个字符串的话，这个时候就需要转义，用%%来表示一个%：</p>
+<pre><code>&gt;&gt;&gt; &apos;growth rate: %d %%&apos; % 7
+&apos;growth rate: 7 %&apos;
+</code></pre><p>另外一种格式化的文化，使用format()函数，比上面的方法要复杂一些：</p>
+<pre><code>&gt;&gt;&gt; &apos;Hello, {0}, 成绩提升了 {1:.1f}%&apos;.format(&apos;小明&apos;, 17.125)
+&apos;Hello, 小明, 成绩提升了 17.1%&apos;
+</code></pre><h4 id="关于数组-list和tuple"><a href="#关于数组-list和tuple" class="headerlink" title="关于数组(list和tuple)"></a>关于数组(list和tuple)</h4><h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><p>list是一种有序的集合，可以随时添加和删除其中的元素（参考JS中的array）。</p>
+<pre><code>&gt;&gt;&gt; classmates = [&apos;Michael&apos;, &apos;Bob&apos;, &apos;Tracy&apos;]
+&gt;&gt;&gt; classmates
+[&apos;Michael&apos;, &apos;Bob&apos;, &apos;Tracy&apos;]
+</code></pre><p>这里 变量<strong>classmates</strong>就是一个list。用len()函数可以获得list元素的个数：</p>
+<pre><code>&gt;&gt;&gt; len(classmates)
+3
+</code></pre><p>如果要取最后一个元素，除了计算索引位置外，还可以用-1做索引，直接获取最后一个元素：</p>
+<pre><code>&gt;&gt;&gt; classmates[-1]
+&apos;Tracy&apos;
+</code></pre><p>无论是正向还是逆向，超出临界值程序都会报错。要确保索引不要越界。</p>
+<h4 id="关于list操作"><a href="#关于list操作" class="headerlink" title="关于list操作"></a>关于list操作</h4><pre><code># 添加元素
+&gt;&gt;&gt; classmates.append(&apos;Adam&apos;)
+&gt;&gt;&gt; classmates
+[&apos;Michael&apos;, &apos;Bob&apos;, &apos;Tracy&apos;, &apos;Adam&apos;]
+
+# 元素插入到指定的位置
+&gt;&gt;&gt; classmates.insert(1, &apos;Jack&apos;)
+&gt;&gt;&gt; classmates
+[&apos;Michael&apos;, &apos;Jack&apos;, &apos;Bob&apos;, &apos;Tracy&apos;, &apos;Adam&apos;]
+
+# 删除list末尾的元素
+&gt;&gt;&gt; classmates.pop()
+&apos;Adam&apos;
+&gt;&gt;&gt; classmates
+[&apos;Michael&apos;, &apos;Jack&apos;, &apos;Bob&apos;, &apos;Tracy&apos;]
+
+# 删除指定位置的元素，用pop(i)方法，其中i是索引位置
+&gt;&gt;&gt; classmates.pop(1)
+&apos;Jack&apos;
+&gt;&gt;&gt; classmates
+[&apos;Michael&apos;, &apos;Bob&apos;, &apos;Tracy&apos;]
+
+# 把某个元素替换成别的元素，可以直接赋值给对应的索引位置
+&gt;&gt;&gt; classmates[1] = &apos;Sarah&apos;
+&gt;&gt;&gt; classmates
+[&apos;Michael&apos;, &apos;Sarah&apos;, &apos;Tracy&apos;]
+</code></pre><h4 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h4><p>另一种有序列表叫元组：tuple。tuple和list非常类似，但是tuple一旦初始化就不能修改(类似常量，可用来作于配置文件，防止被修改的变量，参考 es6 中的 const)</p>
+<p>如果要定义一个空的tuple，可以写成()：</p>
+<pre><code>&gt;&gt;&gt; t = ()
+&gt;&gt;&gt; t
+()
+</code></pre><p>但是，要定义一个只有1个元素的tuple: </p>
+<pre><code># 这是错的，定义的不是tuple，是1这个数！
+  这是因为括号()既可以表示tuple，又可以表示数学公式中的小括号，
+  这就产生了歧义，
+  因此，Python规定，这种情况下，按小括号进行计算，计算结果自然是1。
+  所以，只有1个元素的tuple定义时必须加一个逗号，来消除歧义：
+
+&gt;&gt;&gt; t = (1)
+&gt;&gt;&gt; t
+1
+
+# 这才是对的
+&gt;&gt;&gt; t = (1,)
+&gt;&gt;&gt; t
+(1,)
+</code></pre><h4 id="关于dict"><a href="#关于dict" class="headerlink" title="关于dict"></a>关于dict</h4><p>Python内置了字典：dict的支持，dict全称dictionary，在其他语言中也称为map，使用键-值（key-value）存储，具有极快的查找速度, 例:</p>
+<pre><code>&gt;&gt;&gt; d = {&apos;Michael&apos;: 95, &apos;Bob&apos;: 75, &apos;Tracy&apos;: 85}
+&gt;&gt;&gt; d[&apos;Michael&apos;]
+95
+</code></pre><p>可以通过 <strong>in</strong> 判断key是否存在</p>
+<pre><code>&gt;&gt;&gt; &apos;Thomas&apos; in d
+False
+</code></pre><p>也可以通过dict提供的 <strong>get()</strong> 方法，如果key不存在，可以返回None，或者自己指定的value：</p>
+<pre><code>&gt;&gt;&gt; d.get(&apos;Thomas&apos;)
+&gt;&gt;&gt; d.get(&apos;Thomas&apos;, -1)
+-1
+</code></pre><p>注意：返回None的时候Python的交互环境不显示结果</p>
+<p>可以用 <strong>pop(key)</strong> 方法，对应的value也会从dict中删除：</p>
+<pre><code>&gt;&gt;&gt; d.pop(&apos;Bob&apos;)
+75
+&gt;&gt;&gt; d
+{&apos;Michael&apos;: 95, &apos;Tracy&apos;: 85}
+</code></pre><p>和list比较，dict有以下几个特点：  </p>
+<ol>
+<li>查找和插入的速度极快，不会随着key的增加而变慢；</li>
+<li>需要占用大量的内存，内存浪费多。</li>
+</ol>
+<p>而list相反：</p>
+<ol>
+<li>查找和插入的时间随着元素的增加而增加；</li>
+<li>占用空间小，浪费内存很少。</li>
+</ol>
+<h4 id="关于set"><a href="#关于set" class="headerlink" title="关于set"></a>关于set</h4><p>set和dict类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在set中，没有重复的key。</p>
+<pre><code>&gt;&gt;&gt; s = set([1, 2, 3])
+&gt;&gt;&gt; s
+{1, 2, 3}
+</code></pre><p>重复元素在set中自动被过滤：</p>
+<pre><code>&gt;&gt;&gt; s = set([1, 1, 2, 2, 3, 3])
+&gt;&gt;&gt; s
+{1, 2, 3}
+</code></pre><p>通过 <strong>add(key)</strong> 方法可以添加元素到set中，可以重复添加，但不会有效果：</p>
+<pre><code>&gt;&gt;&gt; s.add(4)
+&gt;&gt;&gt; s
+{1, 2, 3, 4}
+&gt;&gt;&gt; s.add(4)
+&gt;&gt;&gt; s
+{1, 2, 3, 4}
+</code></pre><p>通过 <strong>remove(key)</strong> 方法可以删除元素：</p>
+<pre><code>&gt;&gt;&gt; s.remove(4)
+&gt;&gt;&gt; s
+{1, 2, 3}
+</code></pre><h4 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h4><p>py中的循环一样使用if实现</p>
+<pre><code>age = 3
+if age &gt;= 18:
+    print(&apos;adult&apos;)
+elif age &gt;= 6:
+    print(&apos;teenager&apos;)
+else:
+    print(&apos;kid&apos;)
+</code></pre><p>py的循环有两种，一种是for…in循环，依次把list或tuple中的每个元素迭代出来,例:</p>
+<pre><code>names = [&apos;Michael&apos;, &apos;Bob&apos;, &apos;Tracy&apos;]
+for name in names:
+    print(name)
+</code></pre><p>可以使用<strong>rang()</strong>函数，生成一个整数序列</p>
+<pre><code>#计算1-100的总数和
+sum = 0
+for x in range(101):
+    sum = sum + x
+print(sum)
+</code></pre><p>第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。比如我们要计算100以内所有奇数之和，可以用while循环实现：</p>
+<pre><code>sum = 0
+n = 99
+while n &gt; 0:
+    sum = sum + n
+    n = n - 2
+print(sum)
+</code></pre><p>在循环内部变量n不断自减，直到变为-1时，不再满足while条件，循环退出。</p>
+<h4 id="函数-全世界的函数的基本用法都一样的"><a href="#函数-全世界的函数的基本用法都一样的" class="headerlink" title="函数(全世界的函数的基本用法都一样的)"></a>函数(全世界的函数的基本用法都一样的)</h4><p> 这里是py官方文档中的内置函数合集： <a href="https://docs.python.org/3/library/functions.html" target="_blank" rel="noopener">https://docs.python.org/3/library/functions.html</a>  </p>
+<p> 使用 <strong>def</strong> 定义函数</p>
+<pre><code>def my_abs(x):
+if x &gt;= 0:
+    return x
+else:
+    return -x
+
+print(my_abs(-99))
+</code></pre><h4 id="空函数"><a href="#空函数" class="headerlink" title="空函数"></a>空函数</h4><p>如果想定义一个什么事也不做的空函数，可以用pass语句：</p>
+<pre><code>def nop():
+pass
+</code></pre><p><strong>pass</strong> 语句什么都不做，那有什么用？实际上 <strong>pass</strong> 可以用来作为占位符，比如现在还没想好怎么写函数的代码，就可以先放一个 <strong>pass</strong> ，让代码能运行起来。</p>
+<p><strong>pass</strong> 还可以用在其他语句里，比如：</p>
+<pre><code>if age &gt;= 18:
+pass
+</code></pre><p>缺少了pass，代码运行就会有语法错误。</p>
+<blockquote>
+<p>关于函数的参数 </p>
+</blockquote>
+<p>如果函数中有多个参数且没有默认参数，调用函数的时候如果实参与形参的个数对不上，则会报错</p>
+<pre><code>def test(x,y):
+    return x
+print (test(123456))
+
+&lt;&lt; Traceback (most recent call last):
+&lt;&lt; File &quot;test.py&quot;, line 52, in &lt;module&gt;
+&lt;&lt; print (test(123456))
+&lt;&lt; TypeError: test() missing 1 required positional argument: &apos;y&apos;
+</code></pre><p>这如果设置了默认参数则不会报错</p>
+<pre><code>def test(x,y=1):
+    return x
+print (test(123456))
+
+&lt;&lt; 123456
+</code></pre><p>默认参数可以简化函数的调用。设置默认参数时，有几点要注意：</p>
+<ol>
+<li>是必选参数在前，默认参数在后，否则Python的解释器会报错</li>
+<li>当函数有多个参数时，把变化大的参数放前面，变化小的参数放后面。变化小的参数就可以作为默认参数。</li>
+</ol>
+<p>有多个默认参数时，调用的时候，既可以按顺序提供实参，例： </p>
+<pre><code>def ecode(x=1, y=2, z=3):
+    return x, y, z
+print (ecode(3,4,5))
+</code></pre><p>不按顺序提供部分默认参数。当不按顺序提供部分默认参数时，需要把参数名写上</p>
+<pre><code>def ecode(x=1, y=2, z=3):
+    return x, y, z
+print (ecode(z=5))
+</code></pre><p>意思是，参数 <strong>z</strong> 用传进去的值，其他默认参数继续使用默认值。</p>
+<font color="red"><strong>定义默认参数要牢记一点：默认参数必须指向不变对象！</strong></font>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/24/使用GitHub-Page-Hexo搭建个人博客/" rel="prev" title="使用GitHub Page+Hexo搭建个人博客">
+                使用GitHub Page+Hexo搭建个人博客 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Suven</p>
+              <p class="site-description motion-element" itemprop="description">随手记录，随缘分享</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#随手记"><span class="nav-number">1.</span> <span class="nav-text">随手记</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于python安装"><span class="nav-number">1.0.1.</span> <span class="nav-text">关于python安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于程序"><span class="nav-number">1.0.2.</span> <span class="nav-text">关于程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">1.0.3.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#变量的概念基本上和初中代数的方程变量是一致的，只是在计算机程序中，变量不仅可以是数字，还可以是任意数据类型。"><span class="nav-number">1.0.4.</span> <span class="nav-text">变量的概念基本上和初中代数的方程变量是一致的，只是在计算机程序中，变量不仅可以是数字，还可以是任意数据类型。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串"><span class="nav-number">1.0.5.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#格式化"><span class="nav-number">1.0.6.</span> <span class="nav-text">格式化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后一个常见的问题是如何输出格式化的字符串。我们经常会输出类似’亲爱的xxx你好！你xx月的话费是xx，余额是xx’之类的字符串，而xxx的内容都是根据变量变化的，所以，需要一种简便的格式化字符串的方式"><span class="nav-number">1.0.7.</span> <span class="nav-text">最后一个常见的问题是如何输出格式化的字符串。我们经常会输出类似’亲爱的xxx你好！你xx月的话费是xx，余额是xx’之类的字符串，而xxx的内容都是根据变量变化的，所以，需要一种简便的格式化字符串的方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于数组-list和tuple"><span class="nav-number">1.0.8.</span> <span class="nav-text">关于数组(list和tuple)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list"><span class="nav-number">1.0.9.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于list操作"><span class="nav-number">1.0.10.</span> <span class="nav-text">关于list操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tuple"><span class="nav-number">1.0.11.</span> <span class="nav-text">tuple</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于dict"><span class="nav-number">1.0.12.</span> <span class="nav-text">关于dict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于set"><span class="nav-number">1.0.13.</span> <span class="nav-text">关于set</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#循环"><span class="nav-number">1.0.14.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数-全世界的函数的基本用法都一样的"><span class="nav-number">1.0.15.</span> <span class="nav-text">函数(全世界的函数的基本用法都一样的)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#空函数"><span class="nav-number">1.0.16.</span> <span class="nav-text">空函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Suven</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  <canvas id="bg_canvas"></canvas>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script>
+    let w, h;
+    const OPTIONS = {
+      speed: null,
+      color: null,
+      radius: 4,
+      lineWidth: 0.5,
+      distance: 150,
+    }
+
+    class Circle{
+      constructor(ctx){
+        this.ctx = ctx;
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.speed = OPTIONS.speed || 1;
+        this.color = OPTIONS.color || `rgba(200, 200, 200, 1)`;
+        this.radius = Math.floor(Math.random()*OPTIONS.radius) || Math.floor(Math.random()*2);
+        this.vector = {
+          x: Math.cos(Math.floor(Math.random()*360))*this.speed,
+          y: Math.sin(Math.floor(Math.random()*360))*this.speed
+        };
+      }
+
+      rule(){
+        if (this.x >= w || this.x <= 0){
+          this.vector.x *= -1;
+        }
+
+        if (this.y >= h || this.y <= 0) {
+          this.vector.y *= -1;
+        }
+
+        if (this.x > w) { this.x = w }
+        if (this.x < 0) { this.x = 0 }
+        if (this.y > h) { this.y = h }
+        if (this.y < 0) { this.y = 0 }
+      }
+
+      draw(){
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.restore();
+      }
+
+      update(){
+        this.rule();
+        this.x += this.vector.x;
+        this.y += this.vector.y;
+      }
+    }
+
+    var link = (circle, circles, ctx) => {
+      for (let i = 0; i < circles.length; i++) {
+        let distancex = Math.abs(circles[i].x - circle.x);
+        let distancey = Math.abs(circles[i].y - circle.y);
+        let distance = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
+        if (distance <= Math.floor((OPTIONS.distance/1920)*window.innerWidth)) {
+          ctx.lineWidth = OPTIONS.lineWidth || 0.5;
+          ctx.strokeStyle = `rgba(200, 200, 200, ${1-distance/Math.floor((250/1920)*window.innerWidth)})`;
+          ctx.beginPath();
+          ctx.moveTo(circle.x, circle.y);
+          ctx.lineTo(circles[i].x, circles[i].y);
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+    }
+
+    var initStage = (target) => {
+      const canvas = document.querySelector(target);
+      if (!canvas) {
+        console.error('请输入正确的canvas');
+        return ;
+      }
+      const ctx = canvas.getContext('2d');
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      let circles = [];
+      let drawCircle = new Circle();
+      for(let i = 0; i < 100; i++){
+        circles.push(new Circle(ctx))
+      }
+
+      (function run(){
+        ctx.clearRect(0,0,w,h);
+        circles.forEach(item => {
+          item.draw();
+          item.update();
+        })
+
+        circles.forEach(item => {
+          link(item, circles, ctx);
+        })
+        window.requestAnimationFrame(run);
+      })()
+    }
+
+    window.addEventListener('resize', ()=>{
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    })
+
+    initStage('#bg_canvas');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"react":{"opacityDefault":1},"log":false,"tagMode":false});</script></body>
+</html>

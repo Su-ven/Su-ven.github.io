@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="cmn-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="随手记录，随缘分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://suven.cn/categories/index.html">
+<meta property="og:site_name" content="Suven&#39;s blog">
+<meta property="og:description" content="随手记录，随缘分享">
+<meta property="og:locale" content="cmn-Hans">
+<meta property="og:updated_time" content="2020-06-27T08:20:32.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分类">
+<meta name="twitter:description" content="随手记录，随缘分享">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://suven.cn/categories/">
+
+
+
+
+
+  <title>ThreeJS-起步 | Suven's blog</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+    body{
+      min-height: 100vh;
+    }
+
+    #bg_canvas{
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="cmn-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Suven's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://suven.cn/2019/07/08/ThreeJS-起步/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Suven">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suven's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ThreeJS-起步</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-08T21:21:01+08:00">2019-07-08</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  了解WebGL的基础以及什么是Three.js
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是WebGL"><a href="#什么是WebGL" class="headerlink" title="什么是WebGL"></a>什么是WebGL</h2><p>WebGL（全写Web Graphics Library）是一种3D绘图标准或说协议。它允准把Javascript和OpenGL ES 2.0结合在一起，通过增加OpenGL ES 2.0 的一个Javascript绑定，WebGL可以为HTML5的Canvas提供硬件3D加速渲染。<br>事实上就是使用webgl作用为壳子来进行Open GL接口的调用。因此核心代码譬如着色器, 材质， 光线等仍旧需要使用Open GL的语法进行操作。<br>说白了就是使用Javascript来写3D</p>
+<blockquote>
+<p>检查你的浏览器是否支持WebGL： 打开 <a href="https://get.webgl.org/" target="_blank" rel="noopener">https://get.webgl.org/</a>，如果看到下图所示，则表明浏览器是支持webGL的</p>
+</blockquote>
+<hr>
+<h2 id="什么是THREE-js"><a href="#什么是THREE-js" class="headerlink" title="什么是THREE.js"></a>什么是THREE.js</h2><p>THREE.js是一种使用Javascript语言编写的一款运行在浏览器的3D引擎。它封装了底层的图形接口，对外提供API供开发人员使用。 它地位相当于JQuery之于Javascript， 开发人员无需深入掌握高深的图形学知识，仅仅使用其API即能创建3D场景。除了WebGL之外，Three.js还提供了基于Canvas、SVG标签的渲染器。</p>
+<p>其功能如下</p>
+<ol>
+<li>根据开发人员的需求方便快捷地创建3D场景</li>
+<li>为物体的渲染提供多种类型的纹理和材质 </li>
+<li>自带阴影计算功能，可实现逼真的阴影效果</li>
+<li>引擎中带有多种着色器，可实现多种逼真的效果</li>
+</ol>
+<blockquote>
+<p>Three.js 是Github上的一个开源项目，地址 <a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener">https://github.com/mrdoob/three.js</a></p>
+</blockquote>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p>首先，我们需要在Github下载Three.js的代码。<br>在下载过来的代码中可以看到three.js和three.min.js两个文件，前者是没有经过代码压缩的，因此适用于调试阶段；后者是经过代码压缩的，调试起来会不太方便，但文件较小，适用于最终的发布版。<br>或者使用npm包管理工具</p>
+<pre><code>&gt; npm i three
+</code></pre><h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>我们需要在HTML中引用 three.js 文件</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;three.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>然后就能通过全局变量THREE进行相应开发工作了</p>
+<p>或者使用 <code>import</code> 语法 </p>
+<pre><code>import * as THREE from &apos;three&apos;
+</code></pre><h3 id="THREE-js-基本组件"><a href="#THREE-js-基本组件" class="headerlink" title="THREE.js 基本组件"></a>THREE.js 基本组件</h3><p>一个典型的THREE项目，至少需要包含渲染器（Renderer）、场景（Scene）、照相机（Camera）三大组件, 以及在场景中创建的物体，几何体(Geometry)，甚至还有 材质(material)以及光线(light)</p>
+<h4 id="渲染器-Renderer"><a href="#渲染器-Renderer" class="headerlink" title="渲染器(Renderer)"></a>渲染器(Renderer)</h4><hr>
+<p><strong>参数：</strong></p>
+<blockquote>
+<p>example: webGLrenderer({antialias: true})</p>
+</blockquote>
+<hr>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">parameters</th>
+<th style="text-align:center">values</th>
+<th style="text-align:left">marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">canvas</td>
+<td style="text-align:center">domElement</td>
+<td style="text-align:left">选定一个canvas节点对象做为渲染器的输出对象，如无则由于Three创建一个canvas对象</td>
+</tr>
+<tr>
+<td style="text-align:left">context</td>
+<td style="text-align:center">context <br> default: null</td>
+<td style="text-align:left">用于将渲染器附加到已有的渲染环境(RenderingContext)中。</td>
+</tr>
+<tr>
+<td style="text-align:left">precision</td>
+<td style="text-align:center">String: highp\mediump\lowp <br> default: highp</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">alpha</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">canvas对象是否包含透明度</td>
+</tr>
+<tr>
+<td style="text-align:left">premultipliedAlpha</td>
+<td style="text-align:center">Boolean <br> default: true</td>
+<td style="text-align:left">渲染器是否采用预乘透明度策略</td>
+</tr>
+<tr>
+<td style="text-align:left">antialias</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">是否开启抗锯齿</td>
+</tr>
+<tr>
+<td style="text-align:left">stencil</td>
+<td style="text-align:center">Boolean <br> default: true</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">preserveDrawingBuffer</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">是否手动清除缓存区</td>
+</tr>
+<tr>
+<td style="text-align:left">powerPreference</td>
+<td style="text-align:center">String: high-performance\low-power\default <br> default: default</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">failIfMajorPerformanceCaveat</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">当性能低下时，渲染器是否失效</td>
+</tr>
+<tr>
+<td style="text-align:left">logarithmicDepthBuffer</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">?</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>属性：</strong></p>
+<blockquote>
+<p>example: renderer.autoClear = false</p>
+</blockquote>
+<hr>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Properties</th>
+<th style="text-align:center">values</th>
+<th style="text-align:left">marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">.autoClear</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:left">设置是否在帧显示之前自动清除图像</td>
+</tr>
+<tr>
+<td style="text-align:left">.autoClearColor</td>
+<td style="text-align:center">Boolean <br> default: true</td>
+<td style="text-align:left">设置是否自动清除颜色缓冲</td>
+</tr>
+<tr>
+<td style="text-align:left">.autoClearDepth</td>
+<td style="text-align:center">Boolean <br> default: true</td>
+<td style="text-align:left">设置是否自动清除深度缓冲</td>
+</tr>
+<tr>
+<td style="text-align:left">.autoClearStencil</td>
+<td style="text-align:center">Boolean <br> default: true</td>
+<td style="text-align:left">设置是否自动清除模板缓冲</td>
+</tr>
+<tr>
+<td style="text-align:left">.debug.checkShaderErrors</td>
+<td style="text-align:center">Boolean <br> default: true</td>
+<td style="text-align:left">设置是否开启debug功能，在编辑过程和链接过程中颜色器程序是否存在错误。 <strong>建议开发过程中进行开启。</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities</td>
+<td style="text-align:center">Object</td>
+<td style="text-align:left">↓</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.floatFragmentTextures</td>
+<td style="text-align:center">Boolean <br> default: true</td>
+<td style="text-align:left">设置context是否支持<code>OES_texture_floatr</code>扩展</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.floatVertexTextures</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:left">如果<code>floatFragmentTextures</code> 且 <code>vertexTextures</code> 为true，则这里的值为true</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.getMaxAnisotropy()</td>
+<td style="text-align:center">return Number</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.getMaxPrecision()</td>
+<td style="text-align:center">return Number</td>
+<td style="text-align:left">返回 顶点着色器及片元着色器的最大可用精度</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.isWebGL2</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:left">如果context使用的是WebGL2RenderingContext,则值为true</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.logarithmicDepthBuffer</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:left">如果在参数中，设置logarithmicDepthBuffer为true, 并且 context 支持<code>EXT_frag_depth</code>扩展, 则值为 true</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.maxAttributes</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:left">返回gl.MAX_VERTEX_ATTRIBS 的值</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.maxCubemapSize</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:left">返回gl.MAX_CUBE_MAP_TEXTURE_SIZE 的值。着色器可使用的Cube纹理最大的宽*高</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.maxFragmentUniforms</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:left">返回gl.MAX_FRAGMENT_UNIFORM_VECTORS 的值。片元着色器可使用的uniform最大数量</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.maxTextureSize</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:left">返回gl.MAX_TEXTURE_SIZE 的值。着色器使用的纹理最大的高*宽</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.maxTextures</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:left">返回gl.MAX_TEXTURE_IMAGE_UNITS 的值。着色器使用的纹理最大数量</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.maxVaryings</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:left">返回gl.MAX_VARYING_VECTORS 的值。着色器可使用的变化向量最大数量</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.maxVertexTextures</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:left">返回gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS 的值。顶点着色器可使用的纹理最大数量</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.maxVertexUniforms</td>
+<td style="text-align:center">Number</td>
+<td style="text-align:left">返回gl.MAX_VERTEX_UNIFORM_VECTORS 的值。顶点着色器可使用的uniform最大数量</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.precision</td>
+<td style="text-align:center">String</td>
+<td style="text-align:left">渲染器当前使用的着色器精度</td>
+</tr>
+<tr>
+<td style="text-align:left">.capabilities.vertexTextures</td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:left">如可以使用顶点纹理，则返回true</td>
+</tr>
+<tr>
+<td style="text-align:left">.clippingPlanes</td>
+<td style="text-align:center">Array <br> default: []</td>
+<td style="text-align:left">？</td>
+</tr>
+<tr>
+<td style="text-align:left">.context</td>
+<td style="text-align:center">WebGLRenderingContext</td>
+<td style="text-align:left">当前使用的context环境。context环境可以自由创建，但必需与domElement相对应才能在屏幕上显示</td>
+</tr>
+<tr>
+<td style="text-align:left">.domElement</td>
+<td style="text-align:center">DOMElement</td>
+<td style="text-align:left">用于进行图像输出的canvas对象。把其加入到页面中即可，如<code>document.body.appendChild( renderer.domElement )</code></td>
+</tr>
+<tr>
+<td style="text-align:left">.extensions</td>
+<td style="text-align:center">function/null</td>
+<td style="text-align:left">通过调用其<code>get()</code>方法，判断是否支持对应的WebGL扩展， 不支持返回null。 调用：<code>renderer.extensions.get(&#39;OES_vertex_array_object&#39;)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">.gammaFactor</td>
+<td style="text-align:center">Float <br> default: 2</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">.gammaInput</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">所有纹理和颜色是否使用预乘的伽马值来输入</td>
+</tr>
+<tr>
+<td style="text-align:left">.gammaOutput</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">所有纹理和颜色是否使用预乘的伽马值来输出</td>
+</tr>
+<tr>
+<td style="text-align:left">.info</td>
+<td style="text-align:center">Object</td>
+<td style="text-align:left">输出在渲染过程中的一系列的统计信息。通常情况下这些数据会在每次渲染时重置。</td>
+</tr>
+<tr>
+<td style="text-align:left">.localClippingEnabled</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.maxMorphTargets</td>
+<td style="text-align:center">Integer <br> default: 8</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.maxMorphNormals</td>
+<td style="text-align:center">Integer <br> default: 4</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.physicallyCorrectLights</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">是否使用接近物理现实的光照模式</td>
+</tr>
+<tr>
+<td style="text-align:left">.properties</td>
+<td style="text-align:center">Object</td>
+<td style="text-align:left">用于跟踪子对象的各种方法: dispose/get/remove/update</td>
+</tr>
+<tr>
+<td style="text-align:left">.renderLists</td>
+<td style="text-align:center">WebGLRenderLists</td>
+<td style="text-align:left">显示程序内部处理场景对象的执行顺序</td>
+</tr>
+<tr>
+<td style="text-align:left">.shadowMap</td>
+<td style="text-align:center">WebGLShadowMap</td>
+<td style="text-align:left">对阴影贴图的设置 ↓</td>
+</tr>
+<tr>
+<td style="text-align:left">.shadowMap.enabled</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">是否使用阴影贴图</td>
+</tr>
+<tr>
+<td style="text-align:left">.shadowMap.autoUpdate</td>
+<td style="text-align:center">Boolean <br> default: true</td>
+<td style="text-align:left">是否自动update阴影贴图, 如不需要动态阴影，可在实例化时将其设置为false</td>
+</tr>
+<tr>
+<td style="text-align:left">.shadowMap.needsUpdate</td>
+<td style="text-align:center">Boolean <br> default: false</td>
+<td style="text-align:left">是否使阴影贴图在下一个渲染中进行调用。<code>需要 autoUpadte 的值为 true</code></td>
+</tr>
+<tr>
+<td style="text-align:left">.shadowMap.type</td>
+<td style="text-align:center">Integer</td>
+<td style="text-align:left">规定阴影的类型</td>
+</tr>
+<tr>
+<td style="text-align:left">.state</td>
+<td style="text-align:center">Object</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.state</td>
+<td style="text-align:center">Object</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.state</td>
+<td style="text-align:center">Object</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.toneMapping</td>
+<td style="text-align:center">Constant</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.toneMappingExposure</td>
+<td style="text-align:center">Number <br> default: false</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.toneMappingWhitePoint</td>
+<td style="text-align:center">Number <br> default: false</td>
+<td style="text-align:left">?</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><strong>方法：</strong></p>
+<blockquote>
+<p>example: renderer.setClearColor(0xffffff)</p>
+</blockquote>
+<hr>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Methods</th>
+<th style="text-align:center">params</th>
+<th style="text-align:center">return</th>
+<th style="text-align:left">marks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">.clear ( )</td>
+<td style="text-align:center">color : Boolean\true <br> depth : Boolean\true <br> stencil : Boolean\true</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">清除渲染器的颜色，深度，模板缓冲。可以把颜色重置为当前的clearColor的值。</td>
+</tr>
+<tr>
+<td style="text-align:left">.clearColor ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">清除渲染器的颜色的值。</td>
+</tr>
+<tr>
+<td style="text-align:left">.clearDepth ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">清除渲染器的深度的值。</td>
+</tr>
+<tr>
+<td style="text-align:left">.clearStencil ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">清除渲染器的模板的值。</td>
+</tr>
+<tr>
+<td style="text-align:left">.compile (  )</td>
+<td style="text-align:center">scene: Scene <br> camera: Camera</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">编辑所有的在场景中camera下的材质</td>
+</tr>
+<tr>
+<td style="text-align:left">.copyFramebufferToTexture (  )</td>
+<td style="text-align:center">position : Vector2 <br> texture : Texture <br> level : Number</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">将当前WebGLFramebuffer中的像素复制到2D纹理中</td>
+</tr>
+<tr>
+<td style="text-align:left">.copyTextureToTexture (  )</td>
+<td style="text-align:center">position : Vector2 <br> srcTexture : Texture <br> dstTexture : Texture <br> level : Number</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">把指定位置的纹理复制到当前的纹理中去</td>
+</tr>
+<tr>
+<td style="text-align:left">.dispose (  )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">销毁当前渲染器的context</td>
+</tr>
+<tr>
+<td style="text-align:left">.forceContextLoss ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">模拟丢失WebGL context的情况, 需要 WEBGL_lose_context 扩展的支持</td>
+</tr>
+<tr>
+<td style="text-align:left">.getClearAlpha ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">Float</td>
+<td style="text-align:left">返回当前clear alpha值的浮点数。范围从0到1。</td>
+</tr>
+<tr>
+<td style="text-align:left">.getClearColor ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">Color</td>
+<td style="text-align:left">返回与当前 clear color 相关的颜色实例</td>
+</tr>
+<tr>
+<td style="text-align:left">.getContext ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">WebGLRenderingContext</td>
+<td style="text-align:left">返回当前的WebGL的context实例</td>
+</tr>
+<tr>
+<td style="text-align:left">.getContextAttributes ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">WebGLContextAttributes</td>
+<td style="text-align:left">返回一个对象，记录着设置context时的属性值</td>
+</tr>
+<tr>
+<td style="text-align:left">.getActiveCubeFace ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">Integer</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.getRenderTarget ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">RenderTarget</td>
+<td style="text-align:left">返回当前渲染目标, 如无则返回 null</td>
+</tr>
+<tr>
+<td style="text-align:left">.getCurrentViewport ( )</td>
+<td style="text-align:center">target : Vector4</td>
+<td style="text-align:center">Vector4</td>
+<td style="text-align:left">返回当前视图区</td>
+</tr>
+<tr>
+<td style="text-align:left">.getDrawingBufferSize ( )</td>
+<td style="text-align:center">target : Vector2</td>
+<td style="text-align:center">Vector2</td>
+<td style="text-align:left">返回渲染器绘图缓冲区的宽高，单位为px</td>
+</tr>
+<tr>
+<td style="text-align:left">.getPixelRatio ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">number</td>
+<td style="text-align:left">返回当前设置的像素比</td>
+</tr>
+<tr>
+<td style="text-align:left">.getScissor ( )</td>
+<td style="text-align:center">target : Vector4</td>
+<td style="text-align:center">Vector4</td>
+<td style="text-align:left">返回裁剪区域</td>
+</tr>
+<tr>
+<td style="text-align:left">.getScissorTest ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:left">如果启用裁剪测试，返回true, 否则返回flase</td>
+</tr>
+<tr>
+<td style="text-align:left">.getSize ( )</td>
+<td style="text-align:center">target : Vector2</td>
+<td style="text-align:center">Vector2</td>
+<td style="text-align:left">返回渲染器输出到canvas的宽高，单位为px</td>
+</tr>
+<tr>
+<td style="text-align:left">.getViewport ( )</td>
+<td style="text-align:center">target : Vector4</td>
+<td style="text-align:center">Vector4</td>
+<td style="text-align:left">返回可视区域</td>
+</tr>
+<tr>
+<td style="text-align:left">.resetGLState ( )</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">重置GL的状态</td>
+</tr>
+<tr>
+<td style="text-align:left">.readRenderTargetPixels ( )</td>
+<td style="text-align:center">renderTarget : WebGLRenderTarget <br> x : Float <br> y : Float <br> width : Float <br> height : Float <br> buffer : TypedArray <br> activeCubeFaceIndex : Integer</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">?</td>
+</tr>
+<tr>
+<td style="text-align:left">.render ( )</td>
+<td style="text-align:center">scene : Scene <br> camera : Camera</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">渲染当前场景</td>
+</tr>
+<tr>
+<td style="text-align:left">.renderBufferDirect ( )</td>
+<td style="text-align:center">camera : Camera <br> fog : Fog <br> geometry : Geometry <br> material : Material <br> object : Object3D <br> group : Object</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">运用摄像机及指定材质渲染一个缓冲几何组</td>
+</tr>
+<tr>
+<td style="text-align:left">.renderBufferImmediate ( )</td>
+<td style="text-align:center">object : Object3D <br> program : shaderprogram <br> shading : Material</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">渲染一个即时缓冲区</td>
+</tr>
+<tr>
+<td style="text-align:left">.setAnimationLoop ( )</td>
+<td style="text-align:center">callback : Function</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">一个内部函数，可用于替代 <code>requestAnimationFrame</code>。如果创建 WebVR 项目则必需使用这个方法</td>
+</tr>
+<tr>
+<td style="text-align:left">.setClearAlpha ( )</td>
+<td style="text-align:center">alpha : Float</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">设置 alpha，参数值必需是0.0-1.0</td>
+</tr>
+<tr>
+<td style="text-align:left">.setClearColor ( )</td>
+<td style="text-align:center">color : Color <br> alpha : Float</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">设置颜色和透明度</td>
+</tr>
+<tr>
+<td style="text-align:left">.setPixelRatio ( )</td>
+<td style="text-align:center">value : number</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">设置设备像素比。可用于HiDPI设备，防止输出模糊</td>
+</tr>
+<tr>
+<td style="text-align:left">.setRenderTarget ( )</td>
+<td style="text-align:center">renderTarget : WebGLRenderTarget <br>activeCubeFace : Integer <br>activeMipMapLevel : Integer</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">这个方法用于设置活动的渲染目标</td>
+</tr>
+<tr>
+<td style="text-align:left">.setSize ( )</td>
+<td style="text-align:center">width : Integer <br>&gt;height : Integer <br>updateStyle : Boolean</td>
+<td style="text-align:center">null</td>
+<td style="text-align:left">设置输出canvas的宽高比</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/webgl/" rel="tag"># webgl</a>
+          
+            <a href="/tags/three-js/" rel="tag"># three.js</a>
+          
+            <a href="/tags/3D/" rel="tag"># 3D</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/30/用canvas画一个刮刮卡/" rel="next" title="用canvas画一个刮刮卡">
+                <i class="fa fa-chevron-left"></i> 用canvas画一个刮刮卡
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/09/Geometry-与-BufferGeometry/" rel="prev" title="Geometry 与 BufferGeometry">
+                Geometry 与 BufferGeometry <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Suven</p>
+              <p class="site-description motion-element" itemprop="description">随手记录，随缘分享</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是WebGL"><span class="nav-number">1.</span> <span class="nav-text">什么是WebGL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是THREE-js"><span class="nav-number">2.</span> <span class="nav-text">什么是THREE.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载"><span class="nav-number">2.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用"><span class="nav-number">2.2.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#THREE-js-基本组件"><span class="nav-number">2.3.</span> <span class="nav-text">THREE.js 基本组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#渲染器-Renderer"><span class="nav-number">2.3.1.</span> <span class="nav-text">渲染器(Renderer)</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Suven</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  <canvas id="bg_canvas"></canvas>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script>
+    let w, h;
+    const OPTIONS = {
+      speed: null,
+      color: null,
+      radius: 4,
+      lineWidth: 0.5,
+      distance: 150,
+    }
+
+    class Circle{
+      constructor(ctx){
+        this.ctx = ctx;
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.speed = OPTIONS.speed || 1;
+        this.color = OPTIONS.color || `rgba(200, 200, 200, 1)`;
+        this.radius = Math.floor(Math.random()*OPTIONS.radius) || Math.floor(Math.random()*2);
+        this.vector = {
+          x: Math.cos(Math.floor(Math.random()*360))*this.speed,
+          y: Math.sin(Math.floor(Math.random()*360))*this.speed
+        };
+      }
+
+      rule(){
+        if (this.x >= w || this.x <= 0){
+          this.vector.x *= -1;
+        }
+
+        if (this.y >= h || this.y <= 0) {
+          this.vector.y *= -1;
+        }
+
+        if (this.x > w) { this.x = w }
+        if (this.x < 0) { this.x = 0 }
+        if (this.y > h) { this.y = h }
+        if (this.y < 0) { this.y = 0 }
+      }
+
+      draw(){
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.restore();
+      }
+
+      update(){
+        this.rule();
+        this.x += this.vector.x;
+        this.y += this.vector.y;
+      }
+    }
+
+    var link = (circle, circles, ctx) => {
+      for (let i = 0; i < circles.length; i++) {
+        let distancex = Math.abs(circles[i].x - circle.x);
+        let distancey = Math.abs(circles[i].y - circle.y);
+        let distance = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
+        if (distance <= Math.floor((OPTIONS.distance/1920)*window.innerWidth)) {
+          ctx.lineWidth = OPTIONS.lineWidth || 0.5;
+          ctx.strokeStyle = `rgba(200, 200, 200, ${1-distance/Math.floor((250/1920)*window.innerWidth)})`;
+          ctx.beginPath();
+          ctx.moveTo(circle.x, circle.y);
+          ctx.lineTo(circles[i].x, circles[i].y);
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+    }
+
+    var initStage = (target) => {
+      const canvas = document.querySelector(target);
+      if (!canvas) {
+        console.error('请输入正确的canvas');
+        return ;
+      }
+      const ctx = canvas.getContext('2d');
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      let circles = [];
+      let drawCircle = new Circle();
+      for(let i = 0; i < 100; i++){
+        circles.push(new Circle(ctx))
+      }
+
+      (function run(){
+        ctx.clearRect(0,0,w,h);
+        circles.forEach(item => {
+          item.draw();
+          item.update();
+        })
+
+        circles.forEach(item => {
+          link(item, circles, ctx);
+        })
+        window.requestAnimationFrame(run);
+      })()
+    }
+
+    window.addEventListener('resize', ()=>{
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    })
+
+    initStage('#bg_canvas');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"react":{"opacityDefault":1},"log":false,"tagMode":false});</script></body>
+</html>
