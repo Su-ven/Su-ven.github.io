@@ -123,7 +123,7 @@
 
 
 
-  <title>ThreeJS-画点 | Suven's blog</title>
+  <title>关于GLTF | Suven's blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://suven.cn/2019/07/09/ThreeJS-画点/">
+    <link itemprop="mainEntityOfPage" href="http://suven.cn/2020/06/29/关于GLTF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Suven">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ThreeJS-画点</h1>
+          <h1 class="post-title" itemprop="name headline">关于GLTF</h1>
         
 
         <div class="post-meta">
@@ -292,7 +292,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-09T21:58:57+08:00">2019-07-09</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-29T17:11:38+08:00">2020-06-29</time>
             
 
             
@@ -337,7 +337,7 @@
 
           
               <div class="post-description">
-                  如何使用ThreeJS来绘制点
+                  GLTF是一种图形语言的交换格式, 它是一种3D内容的格式标准。它的具体数据存储格式与JSON相当
               </div>
           
 
@@ -354,270 +354,21 @@
       
 
       
-        <h2 id="画点"><a href="#画点" class="headerlink" title="画点"></a>画点</h2><p>Three.js 中，与点相关的类API主要是Points(创建点的类), PointsMaterial(点相关的材质), BufferGeometry(基础几何体)</p>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol>
-<li>定义基础几何体。可以参考文档中示例代码，three中每个顶点具有三维属性(x, y, z)。故顶点是最少三个值的数组队列。 通过 <code>addAttribute</code> 把值赋予 <code>position</code></li>
-<li>定义材质。参考文档对材质的色彩，透明度，纹理等进行相关参数设置</li>
-<li>以几何体和材质做为参数创建点的类</li>
-<li>把类添加到场景中</li>
-</ol>
-<h3 id="相关API"><a href="#相关API" class="headerlink" title="相关API"></a>相关API</h3><h4 id="几何体-BufferGeometry"><a href="#几何体-BufferGeometry" class="headerlink" title="几何体(BufferGeometry)"></a>几何体(BufferGeometry)</h4><p>链接</p>
-<h4 id="点材质-PointsMaterial"><a href="#点材质-PointsMaterial" class="headerlink" title="点材质(PointsMaterial)"></a>点材质(PointsMaterial)</h4><p>绘制点所用的默认材质  </p>
-<p><strong>示例</strong></p>
-<pre><code>//This will add a starfield to the background of a scene
-var starsGeometry = new THREE.Geometry();
-
-for ( var i = 0; i &lt; 10000; i ++ ) {
-
-  var star = new THREE.Vector3();
-  star.x = THREE.Math.randFloatSpread( 2000 );
-  star.y = THREE.Math.randFloatSpread( 2000 );
-  star.z = THREE.Math.randFloatSpread( 2000 );
-
-  starsGeometry.vertices.push( star );
-
-}
-
-var starsMaterial = new THREE.PointsMaterial( { color: 0x888888 } );
-
-var starField = new THREE.Points( starsGeometry, starsMaterial );
-
-scene.add( starField );
-</code></pre><p><strong>参数：</strong><br>PointsMaterial( parameters : Object )</p>
-<p>参数是一个Object，key-value 都是基于基类<code>Material</code>，可参考<code>Material</code>文档<br>唯一例外的是颜色属性 <code>color</code>, 它使用 16进制字符串传入，默认为 <code>0xffffff</code>。</p>
-<hr>
-<p><strong>属性：</strong></p>
-<blockquote>
-<p>公用属性可以参考 基类<code>Material</code></p>
+        <h2 id="什么是3D模型"><a href="#什么是3D模型" class="headerlink" title="什么是3D模型"></a>什么是3D模型</h2><p>3D模型由顶点(vertex)组成,顶点之间连成三角形和四边形,并最终由无数个多边形构成复杂的立体模型。3D模型通常由3DMAX,MAYA等3D模型软件生成。但是这些软件直接输出的文件通常过于复杂，不可直接用于WEB，因此我们需要把原生的模式转化为适合WEB的格式: GLTF</p>
+<h2 id="什么是GLTF"><a href="#什么是GLTF" class="headerlink" title="什么是GLTF"></a>什么是GLTF</h2><p>GLTF代表Graphics Language Transmission Format（图形语言传输格式）。这种跨平台格式已成为Web上的3D对象标准。它由OpenGL和Vulkan背后的3D图形标准组织Khronos所定义，这使得GLTF基本上成为3D模型的JPG格式：Web导出的通用标准。  </p>
+<p>尽管一些3D Web框架支持特定于平台的模型格式，如FBX和OBJ，但几乎每个框架都支持GLTF。如果有人要为你提供3D模型，你可以请求他们提供GLTF格式的版本。</p>
+<h2 id="我遇到的问题"><a href="#我遇到的问题" class="headerlink" title="我遇到的问题"></a>我遇到的问题</h2><p>疑问：在threeJS demo中，看到了如下代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">THREE.DRACOLoader.setDecoderPath(<span class="string">'./js/libs/draco/gltf/'</span>)</span><br><span class="line"><span class="keyword">let</span> loader = <span class="keyword">new</span> THREE.GLTFLoader()</span><br><span class="line">loader.setDRACOLoader(<span class="keyword">new</span> THREE.DRACOLoader())</span><br><span class="line">loader.load(<span class="string">'./models/gltf/LittlestTokyo.glb'</span>, gltf =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> model = gltf.scene</span><br><span class="line">  model.scale.set(<span class="number">0.01</span>, <span class="number">0.01</span>, <span class="number">0.01</span>)</span><br><span class="line">  scene.add(model)</span><br><span class="line">  mixer = <span class="keyword">new</span> THREE.AnimationMixer(model)</span><br><span class="line">  mixer.clipAction(gltf.animations[<span class="number">0</span>]).play()</span><br><span class="line">  animate()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>从而引了两个问题，DRACO 是什么，以及这里为何一定需要使用DRACO</p>
+<h2 id="DRACO是什么"><a href="#DRACO是什么" class="headerlink" title="DRACO是什么"></a>DRACO是什么</h2><blockquote>
+<p><a href="https://github.com/google/draco" target="_blank" rel="noopener">github.com/google/draco</a>  </p>
 </blockquote>
-<hr>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Properties</th>
-<th style="text-align:center">values</th>
-<th style="text-align:left">marks</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">.color</td>
-<td style="text-align:center">Color <br> default: 0xffffff</td>
-<td style="text-align:left">定义材质的颜色（16进制字符串）</td>
-</tr>
-<tr>
-<td style="text-align:left">.isPointsMaterial</td>
-<td style="text-align:center">Boolean <br> default: true</td>
-<td style="text-align:left">用于检查该类或者派生类是否为一个点材质。此类不应该被更改。</td>
-</tr>
-<tr>
-<td style="text-align:left">.map</td>
-<td style="text-align:center">Texture</td>
-<td style="text-align:left">对材质使用指定纹理</td>
-</tr>
-<tr>
-<td style="text-align:left">.morphTargets</td>
-<td style="text-align:center">Boolean <br> default: false</td>
-<td style="text-align:left">定义材质是否使用 morphTargets <strong>（注）</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">.size</td>
-<td style="text-align:center">Number <br> default: 1.0</td>
-<td style="text-align:left">设置点的大小</td>
-</tr>
-<tr>
-<td style="text-align:left">.sizeAttenuation</td>
-<td style="text-align:center">Boolean <br> default: true</td>
-<td style="text-align:left">点的大小是否根据摄影机的视觉深度变化。(如果设为false则无论摄影机透视距离多少，点的大小都一样)</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h4 id="点类-Points"><a href="#点类-Points" class="headerlink" title="点类(Points)"></a>点类(Points)</h4><p>用于呈现点的类</p>
-<p><strong>参数：</strong></p>
-<hr>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">parameters</th>
-<th style="text-align:center">values</th>
-<th style="text-align:left">marks</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">geometry</td>
-<td style="text-align:center">(可选)Geometry</td>
-<td style="text-align:left">几何体实例</td>
-</tr>
-<tr>
-<td style="text-align:left">material</td>
-<td style="text-align:center">(可选)Material</td>
-<td style="text-align:left">材质</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p><strong>属性：</strong></p>
-<blockquote>
-<p>公用属性可以参考 基类<code>Ojbect3D</code></p>
+<p>draco是由Google推出的一种压缩工具，用于压缩和解压3D几何网格和点云的库。它的目的是改善三维图形的存储和传输。Draco是为高压缩、高效、高速而设计并开发的。代码压缩顶点位置、连接信息、纹理坐标、颜色信息、法线和任何其他和几何图形相关的各种属性。通过Draco，无需压缩视觉保真度，既可以大幅度缩小3D应用和资产。对于用户而言，这意味着应用、场景和模型都可以更快地被下载，浏览器中的3D图形可以更快地上传、VR和AR场景可以通过很小的带宽完成传输。</p>
+<h2 id="为何需要使用DRACO"><a href="#为何需要使用DRACO" class="headerlink" title="为何需要使用DRACO"></a>为何需要使用DRACO</h2><blockquote>
+<p><a href="https://zhuanlan.zhihu.com/p/129295112" target="_blank" rel="noopener">THREEJS性能优化</a>  </p>
 </blockquote>
-<hr>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Properties</th>
-<th style="text-align:center">values</th>
-<th style="text-align:left">marks</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">.geometry</td>
-<td style="text-align:center">Geometry</td>
-<td style="text-align:left">定义几何体</td>
-</tr>
-<tr>
-<td style="text-align:left">.isPoints</td>
-<td style="text-align:center">Boolean <br> default: true</td>
-<td style="text-align:left">用于检查该类或者派生类是否为一个点。此类不应该被更改。</td>
-</tr>
-<tr>
-<td style="text-align:left">.material</td>
-<td style="text-align:center">Material</td>
-<td style="text-align:left">材质</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<p><strong>方法：</strong></p>
-<blockquote>
-<p>公用方法可以参考 基类<code>Ojbect3D</code></p>
-</blockquote>
-<hr>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Methods</th>
-<th style="text-align:center">params</th>
-<th style="text-align:center">return</th>
-<th style="text-align:left">marks</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">.raycast()</td>
-<td style="text-align:center">raycaster : Raycaster <br> intersects : Array</td>
-<td style="text-align:center">null</td>
-<td style="text-align:left">获取光线投射与当前点的交点</td>
-</tr>
-<tr>
-<td style="text-align:left">.clone()</td>
-<td style="text-align:center">null</td>
-<td style="text-align:center">Points</td>
-<td style="text-align:left">返回当前点对象</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><pre><code>import React from &apos;react&apos;
-import * as THREE from &apos;three&apos;
-
-class WebglPointsBillboards extends React.Component {
-  constructor(props){
-    super(props)
-
-    this.camera = null
-    this.scene = null
-    this.renderer = null
-    this.material = null
-    this.timemap = 0
-    this.mouse = {x: 0, y: 0}
-    this.ballIcon = &apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAAB3RJTUUH4wEJAy0SzbkwSAAAA1lJREFUWMPFlktPXVUUx39rn315iAgiTWREooEEB0pMvRqv6cjXSL02oRPS0IGPST+BH8APwEximNTERBAdadVRURLvwJA2OIB0wKghFLXlcR/n7P13cO+VG0pRC1x+yUrO2a//2nuts842HsLFn/462DRkZgUgD4wDw4A1+gSsA8tASdIisNE6ef71/kN17LDG93/8c3+A2SgwARSBMaCboykDK8ACMCdptdnx9RtPHu1A8Yc/WoV7gSngKjDCo7EGTAOzknaajQtvDjzowHvXt8jM8PXGEcw+bezaPaJ4kwDMIX0iuB2AROKbt54CwDdHaf/lBcGMSS8dU7hJAlxSPWc+SuCmDobg3e/vgll95/AFcFLiBykBk4I1JL59exB757tNzAygF5gFLp6SeJN54AqwLQnnzBAgmBIUG8+nacWGFs4MHySAUerZftyE+y+4htb1AKsOCUkTSCNItMlGGpp4SUM0jr7NFAWfe0GBeoVrN2NAwUvK8+/l9TToBvJe0vgZiDcZ90jDZ+jAsNdD/ohtwrx0BvnfgleMws7oECR5xbCOS0bPxIEY1p0UlyWddv1/0CSkuOyVpSVyrmy4ttYCKZbJ0pKPteqiOb9CYufb6kAIK6pVF731ndvQ3v0FnDvfvi9SKGQL1nduw8V7m6hWmVOWrbUt/lm2plplLt7bxGVbd7Ce/tWYVqcVQqgnxylayEJMq9PW07+abd3BJ32DhPt3IWSzmCuQ67xkp1QXJEFa/SpWdmeVVkn6ButBvzD7G2Aoxmets+ua5TpfwVz98nASmIEiSmtLqpUvm7nbIG5ceXE/6y5c+x1lNRSy5y3XNWO5zjzuhG5oMaK0uqS08rEl/pb5Dm5MPge03AFV2cU9/QyYuxkru5OxujevLI3HjnmWhljd+zJWdi9j7pYbGEKV3f3DaXX0tZkSJB5iIGa1Xst1TeE7rprPjeCS/7nrgLJ0jaw2rVpl1uU6dnAJhIyfP8gf7kCTwkwJJFz344S97VF8boLEF80lY7ikux6ag1MFMUIMZcWwQsgWyNK55LHe1VjeATN+aRE+0gGAVz/7tb6gc7juJ8h2t4bM5Qq4JG/OjWM2jLn6fEUhrSvGZWIoKaaLvmdgI5a3/1lj6cOXD9X5G6RjiArvrkCeAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE5LTAxLTA5VDAzOjQ1OjE4KzA4OjAwD0AhlwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOS0wMS0wOVQwMzo0NToxOCswODowMH4dmSsAAABDdEVYdHNvZnR3YXJlAC91c3IvbG9jYWwvaW1hZ2VtYWdpY2svc2hhcmUvZG9jL0ltYWdlTWFnaWNrLTcvL2luZGV4Lmh0bWy9tXkKAAAAGHRFWHRUaHVtYjo6RG9jdW1lbnQ6OlBhZ2VzADGn/7svAAAAGHRFWHRUaHVtYjo6SW1hZ2U6OkhlaWdodAA1MTKPjVOBAAAAF3RFWHRUaHVtYjo6SW1hZ2U6OldpZHRoADUxMhx8A9wAAAAZdEVYdFRodW1iOjpNaW1ldHlwZQBpbWFnZS9wbmc/slZOAAAAF3RFWHRUaHVtYjo6TVRpbWUAMTU0Njk3NjcxOH7TBZQAAAASdEVYdFRodW1iOjpTaXplADEwMzc4QhMA4VoAAABidEVYdFRodW1iOjpVUkkAZmlsZTovLy9ob21lL3d3d3Jvb3QvbmV3c2l0ZS93d3cuZWFzeWljb24ubmV0L2Nkbi1pbWcuZWFzeWljb24uY24vZmlsZXMvMTE4LzExODU3NTcucG5nEqSH3wAAAABJRU5ErkJggg==&apos;
-  }
-
-  render(){
-    return(
-      &lt;div ref=&quot;canvasBox&quot; className=&quot;canvas-box&quot;&gt;&lt;/div&gt;
-    )
-  }
-
-  componentDidMount(){
-    this.run()
-    document.addEventListener(&apos;mousemove&apos;, this.mousemoveHandle.bind(this), false)
-  }
-
-  initCamera(){
-    this.camera = new THREE.PerspectiveCamera(55, window.innerWidth/window.innerHeight, 2, 2000)
-    this.camera.position.z = 1000
-    this.camera.lookAt( this.scene.position );
-  }
-
-  initScene(){
-    this.scene = new THREE.Scene()
-    this.scene.fog = new THREE.FogExp2(0x000000, 0.0008)
-  }
-
-  initRenderer(){
-    this.renderer = new THREE.WebGLRenderer()
-    this.renderer.setSize(window.innerWidth, window.innerHeight)
-    this.refs.canvasBox.appendChild(this.renderer.domElement)
-  }
-
-
-  initModel(){
-    let geometry = new THREE.BufferGeometry()
-    let vertices = []
-    let texture = new THREE.TextureLoader().load(this.ballIcon)
-    for (let i=0; i&lt;1000; i++){
-      let x = 2500 * Math.random() - 1000
-      let y = 2500 * Math.random() - 1000
-      let z = 2500 * Math.random() - 1000
-      vertices.push( x, y, z )
-    }
-
-    // BufferAttribute 只接受类型化的数组作为参数
-    geometry.addAttribute( &apos;position&apos;, new THREE.BufferAttribute( new Float32Array(vertices), 3 ) )
-    this.material = new THREE.PointsMaterial( { size: 30, sizeAttenuation: false, map: texture, alphaTest: 0.5, transparent: true } )
-    this.material.color.setRGB(Math.random(), Math.random(), Math.random())
-    let point = new THREE.Points(geometry, this.material)
-    this.scene.add(point)
-  }
-
-  webGLrender(){
-    this.timemap += 1
-    if (this.timemap &gt; Number.MAX_VALUE/2){ this.timemap = 0 }
-    if (this.timemap % 77 === 0){
-      this.material.color.setRGB(Math.random(), Math.random(), Math.random())
-    }
-
-    this.camera.position.x += ( this.mouse.x - this.camera.position.x ) * 0.05;
-    this.camera.position.y += ( -this.mouse.y - this.camera.position.y ) * 0.05;
-    this.renderer.render(this.scene, this.camera)
-  }
-
-  animate(){
-    this.webGLrender()
-    requestAnimationFrame(this.animate.bind(this))
-  }
-
-  run(){
-    this.initScene()
-    this.initCamera()
-    this.initRenderer()
-    this.initModel()
-    this.animate()
-  }
-
-  mousemoveHandle(e){
-    this.mouse.x = e.clientX - window.innerWidth/2
-    this.mouse.y = e.clientY - window.innerHeight/2
-  }
-
-}
-
-export default WebglPointsBillboards
-</code></pre>
+<p>draco可以把obj或者GLTF等格式压缩得很小，为web的3D使用带来了很大的性能上的提升。</p>
+<p>从<code>GLTFLoader</code>源码中看，是否一定需要使用draco压缩，可以由生成的GLTF文件中确定 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( json.extensionsUsed ) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; json.extensionsUsed.length; ++ i ) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> extensionName = json.extensionsUsed[ i ];</span><br><span class="line">    <span class="keyword">var</span> extensionsRequired = json.extensionsRequired || [];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> ( extensionName ) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> EXTENSIONS.KHR_LIGHTS_PUNCTUAL:</span><br><span class="line">        extensions[ extensionName ] = <span class="keyword">new</span> GLTFLightsExtension( json );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> EXTENSIONS.KHR_MATERIALS_UNLIT:</span><br><span class="line">        extensions[ extensionName ] = <span class="keyword">new</span> GLTFMaterialsUnlitExtension( json );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> EXTENSIONS.KHR_MATERIALS_PBR_SPECULAR_GLOSSINESS:</span><br><span class="line">        extensions[ extensionName ] = <span class="keyword">new</span> GLTFMaterialsPbrSpecularGlossinessExtension( json );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 当GLTF文件中存在这个属性，则需要加载dracoLoader，使用draco技术进行压缩</span></span><br><span class="line">      <span class="keyword">case</span> EXTENSIONS.KHR_DRACO_MESH_COMPRESSION:</span><br><span class="line">        extensions[ extensionName ] = <span class="keyword">new</span> GLTFDracoMeshCompressionExtension( json, <span class="keyword">this</span>.dracoLoader );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> EXTENSIONS.MSFT_TEXTURE_DDS:</span><br><span class="line">        extensions[ EXTENSIONS.MSFT_TEXTURE_DDS ] = <span class="keyword">new</span> GLTFTextureDDSExtension();</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">case</span> EXTENSIONS.KHR_TEXTURE_TRANSFORM:</span><br><span class="line">        extensions[ EXTENSIONS.KHR_TEXTURE_TRANSFORM ] = <span class="keyword">new</span> GLTFTextureTransformExtension( json );</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> ( extensionsRequired.indexOf( extensionName ) &gt;= <span class="number">0</span> ) &#123;</span><br><span class="line"></span><br><span class="line">          <span class="built_in">console</span>.warn( <span class="string">'THREE.GLTFLoader: Unknown extension "'</span> + extensionName + <span class="string">'".'</span> );</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -636,8 +387,6 @@ export default WebglPointsBillboards
           
             <a href="/tags/前端/" rel="tag"># 前端</a>
           
-            <a href="/tags/javascript/" rel="tag"># javascript</a>
-          
             <a href="/tags/webgl/" rel="tag"># webgl</a>
           
             <a href="/tags/three-js/" rel="tag"># three.js</a>
@@ -655,8 +404,8 @@ export default WebglPointsBillboards
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/09/Geometry-与-BufferGeometry/" rel="next" title="Geometry 与 BufferGeometry">
-                <i class="fa fa-chevron-left"></i> Geometry 与 BufferGeometry
+              <a href="/2020/06/27/利用python进行文件批量重命名/" rel="next" title="利用python进行文件批量重命名">
+                <i class="fa fa-chevron-left"></i> 利用python进行文件批量重命名
               </a>
             
           </div>
@@ -665,8 +414,8 @@ export default WebglPointsBillboards
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/07/17/画线/" rel="prev" title="画线">
-                画线 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/07/01/在vue-react中关于静态资源引用/" rel="prev" title="在vue/react中关于静态资源的别名引用">
+                在vue/react中关于静态资源的别名引用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -799,7 +548,7 @@ export default WebglPointsBillboards
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#画点"><span class="nav-number">1.</span> <span class="nav-text">画点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关API"><span class="nav-number">1.2.</span> <span class="nav-text">相关API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#几何体-BufferGeometry"><span class="nav-number">1.2.1.</span> <span class="nav-text">几何体(BufferGeometry)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#点材质-PointsMaterial"><span class="nav-number">1.2.2.</span> <span class="nav-text">点材质(PointsMaterial)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#点类-Points"><span class="nav-number">1.2.3.</span> <span class="nav-text">点类(Points)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例"><span class="nav-number">1.3.</span> <span class="nav-text">案例</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是3D模型"><span class="nav-number">1.</span> <span class="nav-text">什么是3D模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是GLTF"><span class="nav-number">2.</span> <span class="nav-text">什么是GLTF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我遇到的问题"><span class="nav-number">3.</span> <span class="nav-text">我遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DRACO是什么"><span class="nav-number">4.</span> <span class="nav-text">DRACO是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为何需要使用DRACO"><span class="nav-number">5.</span> <span class="nav-text">为何需要使用DRACO</span></a></li></ol></div>
             
 
           </div>
