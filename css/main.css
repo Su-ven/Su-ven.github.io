@@ -407,6 +407,7 @@ table {
   font-size: 14px;
   table-layout: fixed;
   word-wrap: break-all;
+  word-break: break-all;
 }
 table>tbody>tr:nth-of-type(odd) {
   background-color: #f9f9f9;
@@ -1832,7 +1833,7 @@ article.post.post-type-normal h1 {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #121bff;
+  background: #96ff18;
 }
 .links-of-blogroll {
   font-size: 13px;
