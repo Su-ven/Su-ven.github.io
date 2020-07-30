@@ -77,14 +77,14 @@
 
 <meta name="description" content="随手记录，随缘分享">
 <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://suven.cn/tags/index.html">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://suven.cn/categories/index.html">
 <meta property="og:site_name" content="Suven&#39;s blog">
 <meta property="og:description" content="随手记录，随缘分享">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-27T08:20:32.876Z">
+<meta property="og:updated_time" content="2020-06-27T08:20:32.869Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
+<meta name="twitter:title" content="分类">
 <meta name="twitter:description" content="随手记录，随缘分享">
 
 
@@ -117,7 +117,7 @@
 
 
 
-  <link rel="canonical" href="http://suven.cn/tags/">
+  <link rel="canonical" href="http://suven.cn/categories/">
 
 
 
@@ -358,11 +358,11 @@
 <h2 id="环境和一些准备"><a href="#环境和一些准备" class="headerlink" title="环境和一些准备"></a>环境和一些准备</h2><ul>
 <li>我个人使用的是windows x64，之后的都是基于这个系统下的操作</li>
 <li>首先你得有个github账号，然后还要创建个一个仓库。<code>注意仓库名和账号名需要有个对应，举个粟子：我的账号名starriness，我创建的仓库名就是starriness.github.io</code></li>
-<li>接着你得有个域名，域名解析指向你的仓库名<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/8.jpg" alt="(图八)"></li>
+<li>接着你得有个域名，域名解析指向你的仓库名<br><img src="/images/2018-02-04/8.jpg" alt="(图八)"></li>
 <li>然后你得安装个node环境和下载个git，这里顺便给出官网下载地址 <a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">node</a>, <a href="https://git-scm.com/" target="_blank" rel="noopener">git</a></li>
 <li>注意除非有特别说明，否则所有的东西最好还是使用最新的版本，不然会出现一些版本问题</li>
 <li>大部分情况下使用默认安装就可以了，有个别疑问的话可以谷歌一下。在安装Git的时候要注意下把添加鼠标右键命令的选项勾上</li>
-<li>安装完成后可以在cmd中分别输入 git –version &amp;&amp; node –version &amp;&amp; npm –version，出现如图所示就表示已经完全安装成功了<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/1.jpg" alt="(图一)"></li>
+<li>安装完成后可以在cmd中分别输入 git –version &amp;&amp; node –version &amp;&amp; npm –version，出现如图所示就表示已经完全安装成功了<br><img src="/images/2018-02-04/1.jpg" alt="(图一)"></li>
 </ul>
 <h2 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h2><p>hexo是什么呢。。简单来说hexo就是一个可以快速生成博客的框架，它使用markdown来解析文章。就是说你用markdown写完文章后，输入几个指令就能很方便的把你的文章生成为一个静态的网站并部署到github page上</p>
 <p>官网：<a href="https://hexo.io/" target="_blank" rel="noopener">https://hexo.io/</a><br>中文官网：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">https://hexo.io/zh-cn/</a><br>GitHub: <a href="https://github.com/hexojs/hexo" target="_blank" rel="noopener">https://github.com/hexojs/hexo</a></p>
@@ -379,24 +379,24 @@ npm install
 </code></pre><p>安装完成后可以输入在gitbash中输入<code>hexo -v</code> 如安装成功则可以看到有输出hexo的版本信息，同时路径下会生成hexo的目录树</p>
 <h3 id="部署前准备"><a href="#部署前准备" class="headerlink" title="部署前准备"></a>部署前准备</h3><ul>
 <li>为了方便使用git把本地的生成的静态网站部署到GitHub上，需要生成一下本地的ssh密钥   </li>
-<li>在GitBash中，输入 <code>ssh-keygen -t rsa -C &quot;你的邮箱地址&quot;</code>, 连续三次回车。(这样是空密码，当然如果你想自己设置密码的话就在第一次回车后输入密码回车并再次输入密码再回车)<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/2.jpg" alt="(图二)">  </li>
+<li>在GitBash中，输入 <code>ssh-keygen -t rsa -C &quot;你的邮箱地址&quot;</code>, 连续三次回车。(这样是空密码，当然如果你想自己设置密码的话就在第一次回车后输入密码回车并再次输入密码再回车)<br><img src="/images/2018-02-04/2.jpg" alt="(图二)">  </li>
 <li>如上图所示即是成功生成了密钥    </li>
 <li>然后进入 C:\Users\你的用户名.ssh 下面，找到 <code>id_rsa.pub</code> ，用文本编辑器(强烈安利sublime text)打开,复制所有内容  </li>
-<li>打开 <a href="https://github.com/settings/ssh" target="_blank" rel="noopener">https://github.com/settings/ssh</a>, 把上面复制的内容粘贴到github里去<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/3.jpg" alt="(图三)"><br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/4.jpg" alt="(图四)">  </li>
-<li>在gitbash中输入 <code>ssh -T git@github.com</code> 如下图所示则是设置成功<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/5.jpg" alt="(图五)"></li>
+<li>打开 <a href="https://github.com/settings/ssh" target="_blank" rel="noopener">https://github.com/settings/ssh</a>, 把上面复制的内容粘贴到github里去<br><img src="/images/2018-02-04/3.jpg" alt="(图三)"><br><img src="/images/2018-02-04/4.jpg" alt="(图四)">  </li>
+<li>在gitbash中输入 <code>ssh -T git@github.com</code> 如下图所示则是设置成功<br><img src="/images/2018-02-04/5.jpg" alt="(图五)"></li>
 </ul>
 <h3 id="hexo与github-page关联"><a href="#hexo与github-page关联" class="headerlink" title="hexo与github page关联"></a>hexo与github page关联</h3><ul>
 <li>参考上面小节先生成密钥</li>
-<li>根目录下到到配置文件<code>_config.yml</code>, 找到 Deployment，修改如下<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/6.jpg" alt="(图六)"></li>
+<li>根目录下到到配置文件<code>_config.yml</code>, 找到 Deployment，修改如下<br><img src="/images/2018-02-04/6.jpg" alt="(图六)"></li>
 <li>保存后可以分别输入下面指令  </li>
 </ul>
 <pre><code>hexo g
 hexo d
 </code></pre><ul>
-<li>打开github -&gt; 进入你的github page仓库 -&gt; Settings 绑定你的域名<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/9.jpg" alt="(图九)"></li>
+<li>打开github -&gt; 进入你的github page仓库 -&gt; Settings 绑定你的域名<br><img src="/images/2018-02-04/9.jpg" alt="(图九)"></li>
 </ul>
-<p>如图则是部署成功，过几分钟后可请求域名查看网站<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/7.jpg" alt="(图七)"></p>
-<h3 id="关于部署之后需要重新设置域名"><a href="#关于部署之后需要重新设置域名" class="headerlink" title="关于部署之后需要重新设置域名"></a>关于部署之后需要重新设置域名</h3><p>在source目录下创建文件CNAME(没有后缀名),输入你的域名并保存(不带http,https,www)<br><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/10.jpg" alt="(图十)"><br>之后的部署则不需要再重新设置域名了<br><code>如果域名解析中没有把@指向github page仓库的话，直接在浏览器中输入域名可能会显示网络连接失败</code></p>
+<p>如图则是部署成功，过几分钟后可请求域名查看网站<br><img src="/images/2018-02-04/7.jpg" alt="(图七)"></p>
+<h3 id="关于部署之后需要重新设置域名"><a href="#关于部署之后需要重新设置域名" class="headerlink" title="关于部署之后需要重新设置域名"></a>关于部署之后需要重新设置域名</h3><p>在source目录下创建文件CNAME(没有后缀名),输入你的域名并保存(不带http,https,www)<br><img src="/images/2018-02-04/10.jpg" alt="(图十)"><br>之后的部署则不需要再重新设置域名了<br><code>如果域名解析中没有把@指向github page仓库的话，直接在浏览器中输入域名可能会显示网络连接失败</code></p>
 <h3 id="选择主题"><a href="#选择主题" class="headerlink" title="选择主题"></a>选择主题</h3><p>打开站点配置文件 <code>_config.yml</code> ，找到theme，并将值改为对应的主题(在themes文件夹下的文件夹名字)</p>
 <pre><code># Extensions
 ## Plugins: https://hexo.io/plugins/
@@ -429,9 +429,9 @@ categories:
     - hexo
 description: 记录一下github page的使用和一些踩过的坑
 ---
-</code></pre><h2 id="一些踩过的坑"><a href="#一些踩过的坑" class="headerlink" title="一些踩过的坑"></a>一些踩过的坑</h2><p><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/11.png" alt="(图十一)"></p>
+</code></pre><h2 id="一些踩过的坑"><a href="#一些踩过的坑" class="headerlink" title="一些踩过的坑"></a>一些踩过的坑</h2><p><img src="/images/2018-02-04/11.png" alt="(图十一)"></p>
 <pre><code>npm install --save hexo-deployer-git
-</code></pre><p><img src="https://raw.githubusercontent.com/starriness/blog-images/master/2018-02-04/12.png" alt="(图十二)"></p>
+</code></pre><p><img src="/images/2018-02-04/12.png" alt="(图十二)"></p>
 <pre><code>使用git bash来运行hexo指令
 </code></pre>
       
@@ -558,7 +558,7 @@ description: 记录一下github page的使用和一些踩过的坑
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -580,7 +580,7 @@ description: 记录一下github page的使用和一些踩过的坑
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
