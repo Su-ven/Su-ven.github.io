@@ -498,50 +498,14 @@
 
       
         
-          
-            <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>已知有以下数据结构<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"data"</span>: &#123;</span><br><span class="line">  detailList: [&#123;</span><br><span class="line">    lineNo: <span class="string">'1'</span>,</span><br><span class="line">    itemName: <span class="string">'1'</span>,</span><br><span class="line">    code69: <span class="string">'1'</span>,</span><br><span class="line">    price: <span class="string">'1'</span>,</span><br><span class="line">    quantity: <span class="string">'1'</span>,</span><br><span class="line">    amount: <span class="string">'1'</span></span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    lineNo: <span class="string">'2'</span>,</span><br><span class="line">    itemName: <span class="string">'3'</span>,</span><br><span class="line">    code69: <span class="string">'2'</span>,</span><br><span class="line">    price: <span class="string">'2'</span>,</span><br><span class="line">    quantity: <span class="string">'2'</span>,</span><br><span class="line">    amount: <span class="string">'2'</span></span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    lineNo: <span class="string">''</span>,</span><br><span class="line">    itemName: <span class="string">''</span>,</span><br><span class="line">    code69: <span class="string">''</span>,</span><br><span class="line">    price: <span class="string">''</span>,</span><br><span class="line">    quantity: <span class="string">''</span>,</span><br><span class="line">    amount: <span class="string">''</span></span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    lineNo: <span class="string">''</span>,</span><br><span class="line">    itemName: <span class="string">''</span>,</span><br><span class="line">    code69: <span class="string">''</span>,</span><br><span class="line">    price: <span class="string">''</span>,</span><br><span class="line">    quantity: <span class="string">''</span>,</span><br><span class="line">    amount: <span class="string">''</span></span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    lineNo: <span class="string">''</span>,</span><br><span class="line">    itemName: <span class="string">''</span>,</span><br><span class="line">    code69: <span class="string">''</span>,</span><br><span class="line">    price: <span class="string">''</span>,</span><br><span class="line">    quantity: <span class="string">''</span>,</span><br><span class="line">    amount: <span class="string">''</span></span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    lineNo: <span class="string">''</span>,</span><br><span class="line">    itemName: <span class="string">''</span>,</span><br><span class="line">    code69: <span class="string">''</span>,</span><br><span class="line">    price: <span class="string">''</span>,</span><br><span class="line">    quantity: <span class="string">''</span>,</span><br><span class="line">    amount: <span class="string">''</span></span><br><span class="line">  &#125;, ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
-<p>现在需要根据数据结构生成一组dom。可采用类似模板处理方式，利用<code>replace</code>的特性作为解决方案</p>
-<h2 id="模板字符串"><a href="#模板字符串" class="headerlink" title="模板字符串"></a>模板字符串</h2><p>先根据场景把需要生成的dom编写为模板字符中，变量部分可用<code></code>来表示，如下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;lineNo&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;itemName&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;code69&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;price&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;quantity&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>&#123;&#123;amount&#125;&#125;<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="replace"><a href="#replace" class="headerlink" title="replace"></a>replace</h2><blockquote>
-<p>来源：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace" target="_blank" rel="noopener">MDN文档</a></p>
-</blockquote>
-<blockquote>
-<p>语法： <code>str.replace(regexp|substr, newSubStr|function)</code></p>
-</blockquote>
-<p>当以回调函数作为<code>replace</code>的参时，返回函数对应的参及其意义: </p>
-<table>
-<thead>
-<tr>
-<th>变量名</th>
-<th>代表的值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>match</td>
-<td>匹配的子串</td>
-</tr>
-<tr>
-<td>p1,p2, …</td>
-<td>假如replace()方法的第一个参数是一个RegExp 对象，则代表第n个括号匹配的字符串。（对应于上述的$1，$2等。）例如，如果是用 /(\a+)(\b+)/ 这个来匹配，p1 就是匹配的 \a+，p2 就是匹配的 \b+。</td>
-</tr>
-<tr>
-<td>offset</td>
-<td>匹配到的子字符串在原字符串中的偏移量。（比如，如果原字符串是 ‘abcd’，匹配到的子字符串是 ‘bc’，那么这个参数将会是 1）</td>
-</tr>
-<tr>
-<td>string</td>
-<td>被匹配的原字符串。</td>
-</tr>
-<tr>
-<td>NamedCaptureGroup</td>
-<td>命名捕获组匹配的对象</td>
-</tr>
-</tbody>
-</table>
-<p>利用回调函数我们可以很方便的匹配到对应的值并转化为数据的value</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">eachDom (data, dom) &#123;</span><br><span class="line">  <span class="keyword">let</span> res = []</span><br><span class="line">  data.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;  </span><br><span class="line">    <span class="keyword">let</span> render = <span class="string">''</span></span><br><span class="line">    <span class="comment">// 判断 data为 对象数组</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> item === <span class="string">'object'</span> &amp;&amp; !(item <span class="keyword">instanceof</span> <span class="built_in">Array</span>)) &#123;</span><br><span class="line">      render = dom.replace(<span class="regexp">/&#123;&#123;(.*?)&#125;&#125;/g</span>, (match, param) =&gt; item[param])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      render = dom.replace(<span class="regexp">/&#123;&#123;(.*)&#125;&#125;/g</span>, item)</span><br><span class="line">    &#125;</span><br><span class="line">    res.push(render)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> res.join(<span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          replace的奇妙运用
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/07/31/用replace进行模板字符串替换/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
