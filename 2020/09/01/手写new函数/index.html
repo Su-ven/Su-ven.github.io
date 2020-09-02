@@ -123,7 +123,7 @@
 
 
 
-  <title>关于push, push.apply与contact | Suven's blog</title>
+  <title>手写new函数 | Suven's blog</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://suven.cn/2020/07/22/关于push push-apply与contact/">
+    <link itemprop="mainEntityOfPage" href="http://suven.cn/2020/09/01/手写new函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Suven">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">关于push, push.apply与contact</h1>
+          <h1 class="post-title" itemprop="name headline">手写new函数</h1>
         
 
         <div class="post-meta">
@@ -292,7 +292,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-22T09:43:54+08:00">2020-07-22</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-01T14:37:17+08:00">2020-09-01</time>
             
 
             
@@ -337,7 +337,7 @@
 
           
               <div class="post-description">
-                  浅析三者于数组操作中的行为与结果
+                  老生常谈，手写一个new函数
               </div>
           
 
@@ -354,18 +354,23 @@
       
 
       
-        <h1 id="push"><a href="#push" class="headerlink" title="push"></a>push</h1><p><code>push</code>是数组操作中的一个方法，主要作用为把元素添加到数组的末尾。  </p>
-<blockquote>
-<p><code>push</code>方法将会改变原数组</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>]</span><br><span class="line">a.push(<span class="number">8</span>)</span><br><span class="line"><span class="comment">// a: [1,2,3,4,5,6,7,8]</span></span><br><span class="line"><span class="built_in">console</span>.log(a)</span><br></pre></td></tr></table></figure>
-<p><code>push</code> 仅支持以元素块的形式进行推送，如果元素是数组形式的话，<code>push</code>方法不会打碎元素<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>]</span><br><span class="line">a.push([<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"><span class="comment">// a: [1, Array(2)]</span></span><br><span class="line"><span class="built_in">console</span>.log(a)</span><br></pre></td></tr></table></figure></p>
-<h1 id="push-apply"><a href="#push-apply" class="headerlink" title="push.apply"></a>push.apply</h1><p><code>push.apply</code> 依然是基于<code>Array</code>原型链上的<code>push</code>方法，只是利用了<code>apply</code>的特性，把入参作为数组打散进行p推送<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>]</span><br><span class="line">a.push.apply(a, [<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"><span class="comment">// a: [1, 2, 3]</span></span><br><span class="line"><span class="built_in">console</span>.log(a)</span><br></pre></td></tr></table></figure></p>
-<h1 id="contact"><a href="#contact" class="headerlink" title="contact"></a>contact</h1><p><code>contact</code> 用于连接数组或者多个数组，它不会改变原有数组，仅返回合并后的新数组。</p>
-<blockquote>
-<p><code>concat</code> 的元素会被打碎，非数组元素无法打碎，以整体形式加入，数组元素会被打碎，以单个元素的形式加入，并且数组元素和非数组元素可以混用</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = [<span class="number">1</span>]</span><br><span class="line"><span class="comment">// 返回 [1, 2, 3, 1, 3]</span></span><br><span class="line">a.contact([<span class="number">2</span>,<span class="number">3</span>], [<span class="number">1</span>,<span class="number">3</span>])</span><br><span class="line"><span class="comment">// 返回 [1, &#123;a: 'a'&#125;, 'test', &#123;t: 'a'&#125;, &#123;t: 'b'&#125;]</span></span><br><span class="line">a.contact(&#123;<span class="attr">a</span>: <span class="string">'a'</span>&#125;, <span class="string">'test'</span>, [&#123;<span class="attr">t</span>: <span class="string">'a'</span>&#125;, &#123;<span class="attr">t</span>: <span class="string">'b'</span>&#125;])</span><br><span class="line"><span class="comment">// a = 1</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`a = <span class="subst">$&#123;a&#125;</span>`</span>)</span><br></pre></td></tr></table></figure>
+        <p>翻VUE源码时，看到初始init的时候有个判断，Vue方法是否通过<code>new</code>产生，是的话执行<code>_init()</code>方法，否的话则先抛出警告。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Vue</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 如果当前环境非生产环境，且VUE没有通过new实例化，则执行warn方法，抛出一个警告</span></span><br><span class="line">  <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'production'</span> &amp;&amp;</span><br><span class="line">    !(<span class="keyword">this</span> <span class="keyword">instanceof</span> Vue)</span><br><span class="line">  ) &#123;</span><br><span class="line">    warn(<span class="string">'Vue is a constructor and should be called with the `new` keyword'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>._init(options)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>突然想起了以前看过的<code>new</code>的作用原理，想着手写一个new函数来证实一下</p>
+<h1 id="new-的作用过程"><a href="#new-的作用过程" class="headerlink" title="new 的作用过程"></a>new 的作用过程</h1><p>new大体上主要生产了以下4点作用：</p>
+<ol>
+<li>创建一个新对象</li>
+<li>新对象的隐式原型链指向构造函数原型，改变this上下文</li>
+<li>执行构造函数</li>
+<li>返回新对象</li>
+</ol>
+<h1 id="new方法"><a href="#new方法" class="headerlink" title="new方法"></a>new方法</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params">A, B</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.attrA = A</span><br><span class="line">  <span class="keyword">this</span>.attrB = B</span><br><span class="line">&#125;</span><br><span class="line">A.prototype.propA = <span class="string">'propA'</span></span><br><span class="line">A.prototype.funcA = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.attrA, <span class="keyword">this</span>.propA)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> A(<span class="string">'attrA'</span>, <span class="string">'attrB'</span>)</span><br><span class="line">a.funcA()</span><br><span class="line"><span class="comment">// --&gt; attrA propA</span></span><br></pre></td></tr></table></figure>
+<h1 id="实现new"><a href="#实现new" class="headerlink" title="实现new"></a>实现new</h1><p>观察上面的实现，有几个需要注意的点：</p>
+<ol>
+<li>传入必须为构造函数</li>
+<li>需要接收其他参数</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @param func 构造函数</span></span><br><span class="line"><span class="comment">* @params argument 传入的其他参数</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">newFunc</span>(<span class="params">func</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> func !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">'必须传入构造函数'</span>)</span><br><span class="line">  <span class="keyword">let</span> attr = <span class="built_in">Array</span>.from(<span class="built_in">arguments</span>)</span><br><span class="line">  attr.shift()</span><br><span class="line">  <span class="keyword">let</span> obj = <span class="built_in">Object</span>.create(func.prototype)</span><br><span class="line">  func.apply(obj, attr)</span><br><span class="line">  <span class="keyword">return</span> obj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = newFunc(A, <span class="string">'attrA'</span>, <span class="string">'attrB'</span>)</span><br><span class="line">b.funcA()</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -386,8 +391,6 @@
           
             <a href="/tags/javascript/" rel="tag"># javascript</a>
           
-            <a href="/tags/数组/" rel="tag"># 数组</a>
-          
         </div>
       
 
@@ -399,8 +402,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/13/在VUE中重置data数据/" rel="next" title="在VUE中重置data数据">
-                <i class="fa fa-chevron-left"></i> 在VUE中重置data数据
+              <a href="/2020/07/31/用replace进行模板字符串替换/" rel="next" title="用replace进行模板字符串替换">
+                <i class="fa fa-chevron-left"></i> 用replace进行模板字符串替换
               </a>
             
           </div>
@@ -408,10 +411,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/31/用replace进行模板字符串替换/" rel="prev" title="用replace进行模板字符串替换">
-                用replace进行模板字符串替换 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -543,7 +542,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#push"><span class="nav-number">1.</span> <span class="nav-text">push</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#push-apply"><span class="nav-number">2.</span> <span class="nav-text">push.apply</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#contact"><span class="nav-number">3.</span> <span class="nav-text">contact</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#new-的作用过程"><span class="nav-number">1.</span> <span class="nav-text">new 的作用过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new方法"><span class="nav-number">2.</span> <span class="nav-text">new方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现new"><span class="nav-number">3.</span> <span class="nav-text">实现new</span></a></li></ol></div>
             
 
           </div>
