@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="随手记录，随缘分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://suven.cn/categories/index.html">
+<meta property="og:site_name" content="Suven&#39;s blog">
+<meta property="og:description" content="随手记录，随缘分享">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-27T08:20:32.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分类">
+<meta name="twitter:description" content="随手记录，随缘分享">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://suven.cn/categories/">
+
+
+
+
+
+  <title>Vue 编译原理 | Suven's blog</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+    body{
+      min-height: 100vh;
+    }
+
+    #bg_canvas{
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Suven's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://suven.cn/2021/05/22/vue编译原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Suven">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suven's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue 编译原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-22T10:09:57+08:00">2021-05-22</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/框架/" itemprop="url" rel="index">
+                    <span itemprop="name">框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Vue 编译原理
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="vue-编译原理"><a href="#vue-编译原理" class="headerlink" title="vue 编译原理"></a>vue 编译原理</h1><blockquote>
+<p>注：如果是通过 <code>render</code> 函数进行编写的话，那是不会走编译的方法的。</p>
+</blockquote>
+<p>说到这里，需要首先了解下VUE的版本区别，其实在官方文档上也有详细的说明<br>大体上构建版本可以分为下面几种：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>UMD</th>
+<th>CommonJS</th>
+<th>ES Module (基于构建工具使用)</th>
+<th>ES Module (直接用于浏览器)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>完整版</td>
+<td>vue.js</td>
+<td>vue.common.js</td>
+<td>vue.esm.js</td>
+<td>vue.esm.browser.js</td>
+</tr>
+<tr>
+<td>只包含运行时版</td>
+<td>vue.runtime.js</td>
+<td>vue.runtime.common.js</td>
+<td>vue.runtime.esm.js</td>
+<td>-</td>
+</tr>
+<tr>
+<td>完整版 (生产环境)</td>
+<td>vue.min.js</td>
+<td>-</td>
+<td>-</td>
+<td>vue.esm.browser.min.js</td>
+</tr>
+<tr>
+<td>只包含运行时版 (生产环境)</td>
+<td>vue.runtime.min.js</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>详细可参考下官网 <a href="https://cn.vuejs.org/v2/guide/installation.html#%E5%AF%B9%E4%B8%8D%E5%90%8C%E6%9E%84%E5%BB%BA%E7%89%88%E6%9C%AC%E7%9A%84%E8%A7%A3%E9%87%8A" target="_blank" rel="noopener">Vue</a></p>
+<p>以<code>vue-cli</code>为例，使用<code>inspect</code>弹出配置项后，可以查看到以下配置<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">alias: &#123;</span><br><span class="line">  <span class="string">'@'</span>: <span class="string">'E:\\work\\elog-nwms-core-web\\src'</span>,</span><br><span class="line">  vue$: <span class="string">'vue/dist/vue.runtime.esm.js'</span>,</span><br><span class="line">  components: <span class="string">'@/components'</span>,</span><br><span class="line">  img: <span class="string">'@/assets/img'</span>,</span><br><span class="line">  style: <span class="string">'@/assets/style'</span>,</span><br><span class="line">  api: <span class="string">'@/api'</span>,</span><br><span class="line">  utils: <span class="string">'@/utils'</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<p>可见脚手架中使用的是vue的运行时版本，然而我们在直接引用运行时版本，写入一个template的时候，会被抛出一个错误提示<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 运行版本 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.runtime.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 完全版本 --&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- &lt;script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"&gt;&lt;/script&gt; --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">        el: <span class="string">'#app'</span>,</span></span><br><span class="line"><span class="xml">        template: '<span class="tag">&lt;<span class="name">div</span>&gt;</span>123<span class="tag">&lt;/<span class="name">div</span>&gt;</span>'</span></span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>vue.runtime.js:625 [Vue warn]: You are using the runtime-only build of Vue where the template compiler is not available. Either pre-compile the templates into render functions, or use the compiler-included build.</p>
+<p>(found in \&lt;Root>)</p>
+</blockquote>
+<p>大致意思是当前VUE为运行时版本，编译器不可用。</p>
+<p>既然分了两种情况，那我们就分两步走。先看在<code>vue-cli</code>脚后架下的vue编译情况</p>
+<h2 id="vue-loader"><a href="#vue-loader" class="headerlink" title="vue-loader"></a>vue-loader</h2><blockquote>
+<p>\node_modules\vue-loader\lib\index.js</p>
+</blockquote>
+<p>vue-loader 是用于对vue后缀的文件进行解析处理的<br>具体原理先略过，可以看到源码中有引用了<code>vue-template-compiler</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadTemplateCompiler</span> (<span class="params">loaderContext</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">require</span>(<span class="string">'vue-template-compiler'</span>)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/version mismatch/</span>.test(e.toString())) &#123;</span><br><span class="line">      loaderContext.emitError(e)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      loaderContext.emitError(<span class="keyword">new</span> <span class="built_in">Error</span>(</span><br><span class="line">        <span class="string">`[vue-loader] vue-template-compiler must be installed as a peer dependency, `</span> +</span><br><span class="line">        <span class="string">`or a compatible compiler implementation must be passed via options.`</span></span><br><span class="line">      ))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们把眼光转到<code>vue-template-compiler</code>中去。</p>
+<h2 id="vue-template-compiler"><a href="#vue-template-compiler" class="headerlink" title="vue-template-compiler"></a>vue-template-compiler</h2><blockquote>
+<p>node_modules\vue-template-compiler\build.js</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (vueVersion &amp;&amp; vueVersion !== packageVersion) &#123;</span><br><span class="line">  <span class="keyword">var</span> vuePath = <span class="built_in">require</span>.resolve(<span class="string">'vue'</span>)</span><br><span class="line">  <span class="keyword">var</span> packagePath = <span class="built_in">require</span>.resolve(<span class="string">'./package.json'</span>)</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(</span><br><span class="line">    <span class="string">'\n\nVue packages version mismatch:\n\n'</span> +</span><br><span class="line">    <span class="string">'- vue@'</span> + vueVersion + <span class="string">' ('</span> + vuePath + <span class="string">')\n'</span> +</span><br><span class="line">    <span class="string">'- '</span> + packageName + <span class="string">'@'</span> + packageVersion + <span class="string">' ('</span> + packagePath + <span class="string">')\n\n'</span> +</span><br><span class="line">    <span class="string">'This may cause things to work incorrectly. Make sure to use the same version for both.\n'</span> +</span><br><span class="line">    <span class="string">'If you are using vue-loader@&gt;=10.0, simply update vue-template-compiler.\n'</span> +</span><br><span class="line">    <span class="string">'If you are using vue-loader@&lt;10.0 or vueify, re-installing vue-loader/vueify should bump '</span> + packageName + <span class="string">' to the latest.\n'</span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码可以知道，vue-template-compiler 版本一定需要和vue版本保持一致</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> createCompiler = createCompilerCreator(<span class="function"><span class="keyword">function</span> <span class="title">baseCompile</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  template,</span></span></span><br><span class="line"><span class="function"><span class="params">  options</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> ast = parse(template.trim(), options);</span><br><span class="line">  <span class="keyword">if</span> (options.optimize !== <span class="literal">false</span>) &#123;</span><br><span class="line">    optimize(ast, options);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> code = generate(ast, options);</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    ast: ast,</span><br><span class="line">    render: code.render,</span><br><span class="line">    staticRenderFns: code.staticRenderFns</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>可以看到<code>baseCompile</code>方法的处理流程</p>
+<ul>
+<li>先通过<code>parse</code>方法把模板转化为ast树</li>
+<li>再通过<code>optimize</code>方法进行优化处理(无需要动态的节点将会打上静态标签)</li>
+<li><code>generate</code> 用于生成对应的可执行代码</li>
+</ul>
+<h3 id="parseHTML"><a href="#parseHTML" class="headerlink" title="parseHTML"></a>parseHTML</h3><p><code>parse</code> 方法对应的处理html的核心即是<code>parseHTML</code>方法<br> 基本逻辑是根据正则匹配的方式，匹配出模板中的各个标签类，再通过对应的勾子进行操作<br> 最后返回一个ast树<br> ast树基本结构:<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  attrs:[&#123;…&#125;],</span><br><span class="line">  attrsList:[&#123;…&#125;],</span><br><span class="line">  attrsMap:&#123;<span class="attr">id</span>: <span class="string">"app"</span>&#125;,</span><br><span class="line">  children:[&#123;…&#125;, &#123;…&#125;, &#123;…&#125;],</span><br><span class="line">  end:<span class="number">77</span>,</span><br><span class="line">  parent: <span class="literal">undefined</span>,</span><br><span class="line">  plain: <span class="literal">false</span>,</span><br><span class="line">  rawAttrsMap: &#123;<span class="attr">id</span>: &#123;…&#125;&#125;,</span><br><span class="line">  start:<span class="number">0</span>,</span><br><span class="line">  <span class="keyword">static</span>: <span class="literal">false</span>,</span><br><span class="line">  staticRoot: <span class="literal">false</span>,</span><br><span class="line">  tag: <span class="string">"div"</span>,</span><br><span class="line">  type: <span class="number">1</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 其中通过 <code>chars</code> 方法，对每个节点的内容进行对应的处理。通过正则表达式 <code>/\{\{((?:.|\r?\n)+?)\}\}/g</code> 筛选出变量类的内容，并打标记为 <code>type: 2</code>，正常文本则打标记为 <code>type: 3</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> attribute = <span class="regexp">/^\s*([^\s"'&lt;&gt;\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=&lt;&gt;`]+)))?/</span>;</span><br><span class="line"><span class="keyword">var</span> dynamicArgAttribute = <span class="regexp">/^\s*((?:v-[\w-]+:|@|:|#)\[[^=]+\][^\s"'&lt;&gt;\/=]*)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=&lt;&gt;`]+)))?/</span>;</span><br><span class="line"><span class="keyword">var</span> ncname = <span class="string">"[a-zA-Z_][\\-\\.0-9_a-zA-Z"</span> + (unicodeRegExp.source) + <span class="string">"]*"</span>;</span><br><span class="line"><span class="keyword">var</span> qnameCapture = <span class="string">"((?:"</span> + ncname + <span class="string">"\\:)?"</span> + ncname + <span class="string">")"</span>;</span><br><span class="line"><span class="keyword">var</span> startTagOpen = <span class="keyword">new</span> <span class="built_in">RegExp</span>((<span class="string">"^&lt;"</span> + qnameCapture));</span><br><span class="line"><span class="keyword">var</span> startTagClose = <span class="regexp">/^\s*(\/?)&gt;/</span>;</span><br><span class="line"><span class="keyword">var</span> endTag = <span class="keyword">new</span> <span class="built_in">RegExp</span>((<span class="string">"^&lt;\\/"</span> + qnameCapture + <span class="string">"[^&gt;]*&gt;"</span>));</span><br><span class="line"><span class="keyword">var</span> doctype = <span class="regexp">/^&lt;!DOCTYPE [^&gt;]+&gt;/i</span>;</span><br><span class="line"><span class="comment">// #7298: escape - to avoid being pased as HTML comment when inlined in page</span></span><br><span class="line"><span class="keyword">var</span> comment = <span class="regexp">/^&lt;!\--/</span>;</span><br><span class="line"><span class="keyword">var</span> conditionalComment = <span class="regexp">/^&lt;!\[/</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parseHTML</span> (<span class="params">html, options</span>) </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="optimize"><a href="#optimize" class="headerlink" title="optimize"></a>optimize</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">optimize</span> (<span class="params">root, options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!root) &#123; <span class="keyword">return</span> &#125;</span><br><span class="line">  isStaticKey = genStaticKeysCached(options.staticKeys || <span class="string">''</span>);</span><br><span class="line">  isPlatformReservedTag = options.isReservedTag || no;</span><br><span class="line">  <span class="comment">// first pass: mark all non-static nodes.</span></span><br><span class="line">  markStatic(root);</span><br><span class="line">  <span class="comment">// second pass: mark static roots.</span></span><br><span class="line">  markStaticRoots(root, <span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>optimize</code> 方法主要做了两个动作，一是标记所有非静态节点，还有一个是标记所有的静态节点</p>
+<p>先看<code>markStatic</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">markStatic</span> (<span class="params">node</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 判断当前节点是否为静态节点</span></span><br><span class="line">  node.static = isStatic(node);</span><br><span class="line">  <span class="keyword">if</span> (node.type === <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="comment">// do not make component slot content static. this avoids</span></span><br><span class="line">    <span class="comment">// 1. components not able to mutate slot nodes</span></span><br><span class="line">    <span class="comment">// 2. static slot content fails for hot-reloading</span></span><br><span class="line">    <span class="keyword">if</span> (</span><br><span class="line">      !isPlatformReservedTag(node.tag) &amp;&amp;</span><br><span class="line">      node.tag !== <span class="string">'slot'</span> &amp;&amp;</span><br><span class="line">      node.attrsMap[<span class="string">'inline-template'</span>] == <span class="literal">null</span></span><br><span class="line">    ) &#123;</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = node.children.length; i &lt; l; i++) &#123;</span><br><span class="line">      <span class="keyword">var</span> child = node.children[i];</span><br><span class="line">      <span class="comment">// 递归</span></span><br><span class="line">      markStatic(child);</span><br><span class="line">      <span class="comment">// 关键判断</span></span><br><span class="line">      <span class="keyword">if</span> (!child.static) &#123;</span><br><span class="line">        node.static = <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (node.ifConditions) &#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i$<span class="number">1</span> = <span class="number">1</span>, l$<span class="number">1</span> = node.ifConditions.length; i$<span class="number">1</span> &lt; l$<span class="number">1</span>; i$<span class="number">1</span>++) &#123;</span><br><span class="line">        <span class="keyword">var</span> block = node.ifConditions[i$<span class="number">1</span>].block;</span><br><span class="line">        markStatic(block);</span><br><span class="line">        <span class="keyword">if</span> (!block.static) &#123;</span><br><span class="line">          node.static = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isStatic</span> (<span class="params">node</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (node.type === <span class="number">2</span>) &#123; <span class="comment">// expression</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (node.type === <span class="number">3</span>) &#123; <span class="comment">// text</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> !!(node.pre || (</span><br><span class="line">    !node.hasBindings &amp;&amp; <span class="comment">// no dynamic bindings</span></span><br><span class="line">    !node.if &amp;&amp; !node.for &amp;&amp; <span class="comment">// not v-if or v-for or v-else</span></span><br><span class="line">    !isBuiltInTag(node.tag) &amp;&amp; <span class="comment">// not a built-in</span></span><br><span class="line">    isPlatformReservedTag(node.tag) &amp;&amp; <span class="comment">// not a component</span></span><br><span class="line">    !isDirectChildOfTemplateFor(node) &amp;&amp;</span><br><span class="line">    <span class="built_in">Object</span>.keys(node).every(isStaticKey)</span><br><span class="line">  ))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>isStatic</code> 方法是为做基础的静态节点判断。如为表达式(type === 2)，返回<code>false</code>表明非静态节点，如为文本(type === 3)，返回<code>true</code>表明为静态节点。如两都不是，则说明当前为一个标签，可通过相应的属性等进行判断是否为静态节点。<br>初步判断完后，根据节点是否含有<code>children</code>，进行递归处理。<strong>如果当前子节点为动态节点，则父节点也是为动态节点</strong></p>
+<h3 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h3><p>generate 方法里有一个比较重要的方法<code>genElement</code>, 这个方法主要作用，就是根据传入的ast树，以及各种状态，将ast树转化为对应的可执行的<code>render</code>字符串<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// template </span></span><br><span class="line">&lt;div id=<span class="string">"app"</span>&gt;</span><br><span class="line">  &lt;span&gt;<span class="number">123</span>&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">  &#123;&#123;msg&#125;&#125;</span></span><br><span class="line"><span class="regexp">  &lt;span&gt;456&lt;/</span>span&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ back</span></span><br><span class="line"><span class="regexp">&#123;</span></span><br><span class="line"><span class="regexp">  render: "with(this)&#123;return _c('div',&#123;attrs:&#123;"id":"app"&#125;&#125;,[_c('span',[_v("123")]),_v("\n    "+_s(msg)+"\n    "),_c('span',[_v("456")])])&#125;"</span></span><br><span class="line"><span class="regexp">  staticRenderFns: []</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ genElement 方法会将传入的ast树转化为render字符串</span></span><br><span class="line"><span class="regexp">function genElement (el, state) &#123;</span></span><br><span class="line"><span class="regexp">  if (el.parent) &#123;</span></span><br><span class="line"><span class="regexp">    el.pre = el.pre || el.parent.pre;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  if (el.staticRoot &amp;&amp; !el.staticProcessed) &#123;</span></span><br><span class="line"><span class="regexp">    return genStatic(el, state)</span></span><br><span class="line"><span class="regexp">  &#125; else if (el.once &amp;&amp; !el.onceProcessed) &#123;</span></span><br><span class="line"><span class="regexp">    return genOnce(el, state)</span></span><br><span class="line"><span class="regexp">  &#125; else if (el.for &amp;&amp; !el.forProcessed) &#123;</span></span><br><span class="line"><span class="regexp">    return genFor(el, state)</span></span><br><span class="line"><span class="regexp">  &#125; else if (el.if &amp;&amp; !el.ifProcessed) &#123;</span></span><br><span class="line"><span class="regexp">    return genIf(el, state)</span></span><br><span class="line"><span class="regexp">  &#125; else if (el.tag === 'template' &amp;&amp; !el.slotTarget &amp;&amp; !state.pre) &#123;</span></span><br><span class="line"><span class="regexp">    return genChildren(el, state) || 'void 0'</span></span><br><span class="line"><span class="regexp">  &#125; else if (el.tag === 'slot') &#123;</span></span><br><span class="line"><span class="regexp">    return genSlot(el, state)</span></span><br><span class="line"><span class="regexp">  &#125; else &#123;</span></span><br><span class="line"><span class="regexp">    /</span><span class="regexp">/ component or element</span></span><br><span class="line"><span class="regexp">    var code;</span></span><br><span class="line"><span class="regexp">    if (el.component) &#123;</span></span><br><span class="line"><span class="regexp">      code = genComponent(el.component, el, state);</span></span><br><span class="line"><span class="regexp">    &#125; else &#123;</span></span><br><span class="line"><span class="regexp">      var data;</span></span><br><span class="line"><span class="regexp">      if (!el.plain || (el.pre &amp;&amp; state.maybeComponent(el))) &#123;</span></span><br><span class="line"><span class="regexp">        data = genData$2(el, state);</span></span><br><span class="line"><span class="regexp">      &#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">      var children = el.inlineTemplate ? null : genChildren(el, state, true);</span></span><br><span class="line"><span class="regexp">      code = "_c('" + (el.tag) + "'" + (data ? ("," + data) : '') + (children ? ("," + children) : '') + ")";</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">    /</span><span class="regexp">/ module transforms</span></span><br><span class="line"><span class="regexp">    for (var i = 0; i &lt; state.transforms.length; i++) &#123;</span></span><br><span class="line"><span class="regexp">      code = state.transforms[i](el, code);</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">    return code</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>然后会在高级函数<code>createCompileToFunctionFn</code>中，通过<code>createFunction</code>方法，以<code>new Function</code>的方式, 将可执行代码字符串转化为可执行方法</p>
+<h2 id="脚手架与vue编译版本"><a href="#脚手架与vue编译版本" class="headerlink" title="脚手架与vue编译版本"></a>脚手架与vue编译版本</h2><p>两者间的转化逻辑并没有什么不同。翻代码就可以知道，vue的编译版本中走的也是 <code>vue-template-compiler</code> 一套，可以认为<code>vue-template-compiler</code>是由vue源码中抽离出去的一段特定逻辑代码。</p>
+<p>但是通过脚手架编辑，是为预编译，在vue运行过程中无需再重新进行模板的编译操作，相对来说其性能会更高一些。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/09/面试一/" rel="next" title="面试一">
+                <i class="fa fa-chevron-left"></i> 面试一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/30/VUE渲染流程/" rel="prev" title="VUE渲染流程">
+                VUE渲染流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Suven</p>
+              <p class="site-description motion-element" itemprop="description">随手记录，随缘分享</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-编译原理"><span class="nav-number">1.</span> <span class="nav-text">vue 编译原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-loader"><span class="nav-number">1.1.</span> <span class="nav-text">vue-loader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-template-compiler"><span class="nav-number">1.2.</span> <span class="nav-text">vue-template-compiler</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#parseHTML"><span class="nav-number">1.2.1.</span> <span class="nav-text">parseHTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#optimize"><span class="nav-number">1.2.2.</span> <span class="nav-text">optimize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generate"><span class="nav-number">1.2.3.</span> <span class="nav-text">generate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚手架与vue编译版本"><span class="nav-number">1.3.</span> <span class="nav-text">脚手架与vue编译版本</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Suven</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  <canvas id="bg_canvas"></canvas>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script>
+    let w, h;
+    const OPTIONS = {
+      speed: null,
+      color: null,
+      radius: 4,
+      lineWidth: 0.5,
+      distance: 150,
+    }
+
+    class Circle{
+      constructor(ctx){
+        this.ctx = ctx;
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.speed = OPTIONS.speed || 1;
+        this.color = OPTIONS.color || `rgba(200, 200, 200, 1)`;
+        this.radius = Math.floor(Math.random()*OPTIONS.radius) || Math.floor(Math.random()*2);
+        this.vector = {
+          x: Math.cos(Math.floor(Math.random()*360))*this.speed,
+          y: Math.sin(Math.floor(Math.random()*360))*this.speed
+        };
+      }
+
+      rule(){
+        if (this.x >= w || this.x <= 0){
+          this.vector.x *= -1;
+        }
+
+        if (this.y >= h || this.y <= 0) {
+          this.vector.y *= -1;
+        }
+
+        if (this.x > w) { this.x = w }
+        if (this.x < 0) { this.x = 0 }
+        if (this.y > h) { this.y = h }
+        if (this.y < 0) { this.y = 0 }
+      }
+
+      draw(){
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.restore();
+      }
+
+      update(){
+        this.rule();
+        this.x += this.vector.x;
+        this.y += this.vector.y;
+      }
+    }
+
+    var link = (circle, circles, ctx) => {
+      for (let i = 0; i < circles.length; i++) {
+        let distancex = Math.abs(circles[i].x - circle.x);
+        let distancey = Math.abs(circles[i].y - circle.y);
+        let distance = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
+        if (distance <= Math.floor((OPTIONS.distance/1920)*window.innerWidth)) {
+          ctx.lineWidth = OPTIONS.lineWidth || 0.5;
+          ctx.strokeStyle = `rgba(200, 200, 200, ${1-distance/Math.floor((250/1920)*window.innerWidth)})`;
+          ctx.beginPath();
+          ctx.moveTo(circle.x, circle.y);
+          ctx.lineTo(circles[i].x, circles[i].y);
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+    }
+
+    var initStage = (target) => {
+      const canvas = document.querySelector(target);
+      if (!canvas) {
+        console.error('请输入正确的canvas');
+        return ;
+      }
+      const ctx = canvas.getContext('2d');
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      let circles = [];
+      let drawCircle = new Circle();
+      for(let i = 0; i < 100; i++){
+        circles.push(new Circle(ctx))
+      }
+
+      (function run(){
+        ctx.clearRect(0,0,w,h);
+        circles.forEach(item => {
+          item.draw();
+          item.update();
+        })
+
+        circles.forEach(item => {
+          link(item, circles, ctx);
+        })
+        window.requestAnimationFrame(run);
+      })()
+    }
+
+    window.addEventListener('resize', ()=>{
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    })
+
+    initStage('#bg_canvas');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"react":{"opacityDefault":1},"log":false,"tagMode":false});</script></body>
+</html>

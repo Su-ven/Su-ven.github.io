@@ -77,14 +77,14 @@
 
 <meta name="description" content="随手记录，随缘分享">
 <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://suven.cn/tags/index.html">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://suven.cn/categories/index.html">
 <meta property="og:site_name" content="Suven&#39;s blog">
 <meta property="og:description" content="随手记录，随缘分享">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-27T08:20:32.876Z">
+<meta property="og:updated_time" content="2020-06-27T08:20:32.869Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
+<meta name="twitter:title" content="分类">
 <meta name="twitter:description" content="随手记录，随缘分享">
 
 
@@ -117,7 +117,7 @@
 
 
 
-  <link rel="canonical" href="http://suven.cn/tags/">
+  <link rel="canonical" href="http://suven.cn/categories/">
 
 
 
@@ -371,7 +371,7 @@
 <li>通过<code>storage</code>记录切换后的语言</li>
 <li>页面加载后先读取缓存，如果缓存没有语言记录，则使用默认的语言</li>
 </ol>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>发现element的 表单校验提示信息，在执行了语言切换后，并没有跟随切换。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>发现element的表单校验提示信息，在执行了语言切换后，并没有跟随切换。</p>
 <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>先看一下<code>i18n</code>关于语言渲染功能的代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">_initVM (data: &#123;</span><br><span class="line">  locale: Locale,</span><br><span class="line">  fallbackLocale: Locale,</span><br><span class="line">  messages: LocaleMessages,</span><br><span class="line">  dateTimeFormats: DateTimeFormats,</span><br><span class="line">  numberFormats: NumberFormats</span><br><span class="line">&#125;): <span class="keyword">void</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> silent = Vue.config.silent</span><br><span class="line">  Vue.config.silent = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">this</span>._vm = <span class="keyword">new</span> Vue(&#123; data &#125;)</span><br><span class="line">  Vue.config.silent = silent</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">watchLocale (): ?<span class="built_in">Function</span> &#123;</span><br><span class="line">  <span class="comment">/* istanbul ignore if */</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>._sync || !<span class="keyword">this</span>._root) &#123; <span class="keyword">return</span> <span class="literal">null</span> &#125;</span><br><span class="line">  <span class="keyword">const</span> target: any = <span class="keyword">this</span>._vm</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>._root.$i18n.vm.$watch(<span class="string">'locale'</span>, (val) =&gt; &#123;</span><br><span class="line">    target.$<span class="keyword">set</span>(target, 'locale', val)</span><br><span class="line">    target.$forceUpdate()</span><br><span class="line">  &#125;, &#123; immediate: <span class="literal">true</span> &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上述代码可看出，i18n在初始化的时候new了一个Vue实例，然后观测<code>local</code>，在<code>local</code>进行变更的时候，会执行<code>$forceUpdate()</code>方法进行更新。由于进行<code>$forceUpdate()</code>的是i18n内部自建的Vue实例，因此并不会影响到我们项目的Vue实例 </p>
@@ -419,6 +419,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/05/09/面试一/" rel="prev" title="面试一">
+                面试一 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -495,7 +499,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -506,7 +510,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -517,7 +521,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -570,7 +574,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
