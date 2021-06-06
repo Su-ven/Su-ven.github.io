@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="随手记录，随缘分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://suven.cn/categories/index.html">
+<meta property="og:site_name" content="Suven&#39;s blog">
+<meta property="og:description" content="随手记录，随缘分享">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-27T08:20:32.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分类">
+<meta name="twitter:description" content="随手记录，随缘分享">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://suven.cn/categories/">
+
+
+
+
+
+  <title>VUE自定义指令 | Suven's blog</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+    body{
+      min-height: 100vh;
+    }
+
+    #bg_canvas{
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Suven's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://suven.cn/2021/06/06/VUE自定义指令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Suven">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suven's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">VUE自定义指令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-06T09:58:31+08:00">2021-06-06</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/框架/" itemprop="url" rel="index">
+                    <span itemprop="name">框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Vue 自定义指令源码解析及一些功能块实现
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="VUE自定义指令"><a href="#VUE自定义指令" class="headerlink" title="VUE自定义指令"></a>VUE自定义指令</h1><p>当需求需要对于底层DOM结构进行操作的时候，可以使用自定义指令</p>
+<h1 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h1><p>自定义指令可以通过全局进行注册，或者进行局部注册<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册一个全局自定义指令 `v-focus`</span></span><br><span class="line">Vue.directive(<span class="string">'focus'</span>, &#123;</span><br><span class="line">  <span class="comment">// 当被绑定的元素插入到 DOM 中时……</span></span><br><span class="line">  inserted: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 聚焦元素</span></span><br><span class="line">    el.focus()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意局部是 directives，全局是 directive</span></span><br><span class="line">directives: &#123;</span><br><span class="line">  focus: &#123;</span><br><span class="line">    <span class="comment">// 指令的定义</span></span><br><span class="line">    inserted: <span class="function"><span class="keyword">function</span> (<span class="params">el</span>) </span>&#123;</span><br><span class="line">      el.focus()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果不需要关注<code>bind</code>和<code>update</code>这些勾子的话，可以使用函数简写的方式，源码会自动为回调函数绑定bind和update<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.directive(<span class="string">'color-swatch'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">el, binding</span>) </span>&#123;</span><br><span class="line">  el.style.backgroundColor = binding.value</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>参考 <a href="https://cn.vuejs.org/v2/guide/custom-directive.html" target="_blank" rel="noopener">VUE官网</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">var</span> platformDirectives = &#123;</span><br><span class="line">  model: directive,</span><br><span class="line">  show: show</span><br><span class="line">&#125;;</span><br><span class="line">...</span><br><span class="line">extend(Vue.options.directives, platformDirectives);</span><br><span class="line">...</span><br><span class="line"><span class="comment">// 把属性混入到Vue的options中</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">extend</span> (<span class="params">to, _from</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> _from) &#123;</span><br><span class="line">    to[key] = _from[key]; </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> to</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>VUE把 <code>component</code>, <code>directive</code>, <code>filter</code> 作成了一个系统，通过forEach创建对应的处理逻辑<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ASSET_TYPES = [ <span class="string">'component'</span>, <span class="string">'directive'</span>, <span class="string">'filter'</span> ];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">initAssetRegisters</span> (<span class="params">Vue</span>) </span>&#123;</span><br><span class="line">  ASSET_TYPES.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">type</span>) </span>&#123;</span><br><span class="line">    Vue[type] = <span class="function"><span class="keyword">function</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">      id,</span></span></span><br><span class="line"><span class="function"><span class="params">      definition</span></span></span><br><span class="line"><span class="function"><span class="params">    </span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (!definition) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.options[type + <span class="string">'s'</span>][id]</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span> (type === <span class="string">'directive'</span> &amp;&amp; <span class="keyword">typeof</span> definition === <span class="string">'function'</span>) &#123;</span><br><span class="line">          definition = &#123; <span class="attr">bind</span>: definition, <span class="attr">update</span>: definition &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.options[type + <span class="string">'s'</span>][id] = definition;</span><br><span class="line">        <span class="keyword">return</span> definition</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，如果传入的是一个方法，而非一个对象的话，会自动把当前方法转化为一个<code>{bind: definition, update: definition}</code>的对象</p>
+<p>在组件内部注册的指令，会在组件初始化，触发mergeOptions的时候，把对应的指令进行规范化，然后和大V的options进行合并<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeOptions</span> (<span class="params">parent, child, vm</span>) </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  normalizeDirectives(child);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">normalizeDirectives</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> dirs = options.directives;</span><br><span class="line">  <span class="keyword">if</span> (dirs) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> dirs) &#123;</span><br><span class="line">      <span class="keyword">var</span> def = dirs[key];</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> def === <span class="string">'function'</span>) &#123;</span><br><span class="line">        dirs[key] = &#123; <span class="attr">bind</span>: def, <span class="attr">update</span>: def &#125;;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>normalizeDirectives</code>的主要作用其实也只是处理以<code>function</code>形式传入进来的处理方案</p>
+<p>接下来就进入到渲染调用环节<br>在解析模板的时候，会通过 <code>addDirective</code> 方法，将节点上的指令解析成对应的数据结构<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addDirective</span> (<span class="params">el, name, rawName, value, arg, isDynamicArg, modifiers, range</span>) </span>&#123;</span><br><span class="line">  (el.directives || (el.directives = [])).push(rangeSetItem(&#123;</span><br><span class="line">    name: name,</span><br><span class="line">    rawName: rawName,</span><br><span class="line">    value: value,</span><br><span class="line">    arg: arg,</span><br><span class="line">    isDynamicArg: isDynamicArg,</span><br><span class="line">    modifiers: modifiers</span><br><span class="line">  &#125;, range));</span><br><span class="line">  el.plain = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在渲染过程中，会触发指令的各个勾子函数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> directives = &#123;</span><br><span class="line">  create: updateDirectives,</span><br><span class="line">  update: updateDirectives,</span><br><span class="line">  destroy: <span class="function"><span class="keyword">function</span> <span class="title">unbindDirectives</span> (<span class="params">vnode</span>) </span>&#123;</span><br><span class="line">    updateDirectives(vnode, emptyNode);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，增/改/删 三个流程，都是触发的<code>_update</code>方法<br><code>_update</code>方法会先从新旧的<code>vnode</code>上去寻找自定义指令，如果在<code>oldVnode</code>上没有找到，会认为是新增流程，会回调<code>bind</code>勾子函数，<br>否则会回调<code>update</code>勾子函数。</p>
+<p>如果指定中有注册 <code>inserted</code> 方法的话，会把方法推入到 <code>dirsWithInsert</code> 队列中，回调<code>inserted</code>勾子函数<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (dirsWithInsert.length) &#123;</span><br><span class="line">  <span class="keyword">var</span> callInsert = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; dirsWithInsert.length; i++) &#123;</span><br><span class="line">      callHook$<span class="number">1</span>(dirsWithInsert[i], <span class="string">'inserted'</span>, vnode, oldVnode);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">if</span> (isCreate) &#123;</span><br><span class="line">    mergeVNodeHook(vnode, <span class="string">'insert'</span>, callInsert);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    callInsert();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果存在<code>oldVnode</code>，则会走回调<code>update</code>勾子，如果指令中有注册<code>componentUpdated</code>方法的话，会把方法看推入到<code>dirsWithPostpatch</code>队列中，回调<code>componentUpdated</code>勾子函数</p>
+<h1 id="功能块"><a href="#功能块" class="headerlink" title="功能块"></a>功能块</h1><h2 id="点击复制"><a href="#点击复制" class="headerlink" title="点击复制"></a>点击复制</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;span v-copy=<span class="string">"copyText"</span>&gt;<span class="number">456</span>&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">...</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">directives: &#123;</span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ 点击复制</span></span><br><span class="line"><span class="regexp">  copy: &#123;</span></span><br><span class="line"><span class="regexp">    bind(el, binding) &#123;</span></span><br><span class="line"><span class="regexp">      let value = binding.value</span></span><br><span class="line"><span class="regexp">      el.$$bindingValue = binding.value</span></span><br><span class="line"><span class="regexp">      el.$$handle = function () &#123;</span></span><br><span class="line"><span class="regexp">        /</span><span class="regexp">/ 以chrome为基准</span></span><br><span class="line"><span class="regexp">        navigator.clipboard.writeText(el.$$bindingValue).then(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">          console.log('复制成功')</span></span><br><span class="line"><span class="regexp">        &#125;)</span></span><br><span class="line"><span class="regexp">      &#125;</span></span><br><span class="line"><span class="regexp">      el.addEventListener('click', el.$$handle)</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    componentUpdated(el, binding) &#123;</span></span><br><span class="line"><span class="regexp">      el.$$bindingValue = binding.value</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    unbind (el) &#123;</span></span><br><span class="line"><span class="regexp">      el.removeEventListener('click', el.$$handle)</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;,</span></span><br></pre></td></tr></table></figure>
+<h2 id="长按事件"><a href="#长按事件" class="headerlink" title="长按事件"></a>长按事件</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;span v-longpress=<span class="string">"testHandle"</span>&gt;<span class="number">456</span>&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">...</span></span><br><span class="line"><span class="regexp">methods: &#123;</span></span><br><span class="line"><span class="regexp">  testHandle()&#123;</span></span><br><span class="line"><span class="regexp">    console.log('object')</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;,</span></span><br><span class="line"><span class="regexp">directives: &#123;</span></span><br><span class="line"><span class="regexp">  longpress: &#123;</span></span><br><span class="line"><span class="regexp">    bind(el, &#123;value&#125;) &#123;</span></span><br><span class="line"><span class="regexp">      let timer</span></span><br><span class="line"><span class="regexp">      let handler = value</span></span><br><span class="line"><span class="regexp">      el.$$startHandle = function(e) &#123;</span></span><br><span class="line"><span class="regexp">        timer = setTimeout(function()&#123;</span></span><br><span class="line"><span class="regexp">          /</span><span class="regexp">/ console.log('触发长按')</span></span><br><span class="line"><span class="regexp">          handler()</span></span><br><span class="line"><span class="regexp">        &#125;, 2000)</span></span><br><span class="line"><span class="regexp">      &#125;</span></span><br><span class="line"><span class="regexp">      el.$$endHandle = function(e) &#123;</span></span><br><span class="line"><span class="regexp">        clearTimeout(timer)</span></span><br><span class="line"><span class="regexp">      &#125;</span></span><br><span class="line"><span class="regexp">      el.addEventListener('mousedown', el.$$startHandle)</span></span><br><span class="line"><span class="regexp">      el.addEventListener('mouseup', el.$$endHandle)</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    componentUpdated(el, &#123;value&#125;)&#123;</span></span><br><span class="line"><span class="regexp">      el.$$value = value</span></span><br><span class="line"><span class="regexp">    &#125;,</span></span><br><span class="line"><span class="regexp">    unbind() &#123;</span></span><br><span class="line"><span class="regexp">      el.removeEventListener('mousedown', el.$$startHandle)</span></span><br><span class="line"><span class="regexp">      el.removeEventListener('mouseup', el.$$endHandle)</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">...</span></span><br></pre></td></tr></table></figure>
+<h2 id="防抖指令"><a href="#防抖指令" class="headerlink" title="防抖指令"></a>防抖指令</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">directive: &#123;</span><br><span class="line">  debounce: &#123;</span><br><span class="line">    bind(el, &#123;value&#125;) &#123;</span><br><span class="line">      <span class="keyword">let</span> timer </span><br><span class="line">      <span class="keyword">let</span> handler = value</span><br><span class="line">      el.$$value = value</span><br><span class="line">      el.$$startHandle = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(timer) &#123;</span><br><span class="line">          clearTimeout(timer)</span><br><span class="line">        &#125;</span><br><span class="line">        timer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          handler()</span><br><span class="line">        &#125;, <span class="number">500</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(el.tagName === <span class="string">'INPUT'</span> || el.tagName === <span class="string">'textarea'</span>) &#123;</span><br><span class="line">        el.addEventListener(<span class="string">'input'</span>, el.$$startHandle)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        el.addEventListener(<span class="string">'click'</span>, el.$$startHandle)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    componentUpdated(el, &#123;value&#125;) &#123;</span><br><span class="line">      el.$$value = value</span><br><span class="line">    &#125;,</span><br><span class="line">    unbind(el) &#123;</span><br><span class="line">      <span class="keyword">if</span>(el.tagName === <span class="string">'INPUT'</span> || el.tagName === <span class="string">'textarea'</span>) &#123;</span><br><span class="line">        el.removeEventListener(<span class="string">'input'</span>, el.$$startHandle)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        el.removeEventListener(<span class="string">'click'</span>, el.$$startHandle)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="图片懒加载"><a href="#图片懒加载" class="headerlink" title="图片懒加载"></a>图片懒加载</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">directives: &#123;</span><br><span class="line">  imglazy: &#123;</span><br><span class="line">    inserted (el, &#123;value&#125;) &#123;</span><br><span class="line">      el.src = <span class="string">'./img1.jpg'</span></span><br><span class="line">      el.$$dataSrc = value</span><br><span class="line">      </span><br><span class="line">      el.$$downloadImg = <span class="function"><span class="keyword">function</span> (<span class="params">el, src</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> newImg = <span class="keyword">new</span> Image()</span><br><span class="line">        newImg.src = src</span><br><span class="line">        newImg.onload = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">          el.src = src</span><br><span class="line">          el.$$loaded = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      el.$$downloadImg(el, value)</span><br><span class="line">    &#125;,</span><br><span class="line">    componentUpdated (el, &#123;value&#125;) &#123;</span><br><span class="line">      el.$$dataSrc = value</span><br><span class="line">      el.$$downloadImg(el, value)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="页面水印"><a href="#页面水印" class="headerlink" title="页面水印"></a>页面水印</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">directives: &#123;</span><br><span class="line">  waterMarker: &#123;</span><br><span class="line">    inserted(el, &#123;value&#125;) &#123;</span><br><span class="line">      el.$$createEleHandle = <span class="function"><span class="keyword">function</span> (<span class="params">el, value</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> CANVAS_OPS = &#123;</span><br><span class="line">          width: <span class="number">500</span>,</span><br><span class="line">          height: <span class="number">100</span>,</span><br><span class="line">          fontStyle: <span class="string">`100px PingFang-SC-Regular`</span>,</span><br><span class="line">          fillColor: <span class="string">'#dedede'</span></span><br><span class="line">        &#125;</span><br><span class="line">        el.$$imgHeight = CANVAS_OPS.height</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> imgSrc = createImgContent(value)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果已存在水印图片，可直接替换路径，否则需要构建图片</span></span><br><span class="line">        <span class="keyword">let</span> img = el.querySelector(<span class="string">'#canvas-img'</span>)</span><br><span class="line">        <span class="keyword">if</span>(img) &#123;</span><br><span class="line">          img.src = imgSrc</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          createImgObj(el, imgSrc)</span><br><span class="line">          el.appendChild(img)</span><br><span class="line">        &#125;</span><br><span class="line">        el.$$baseTop = <span class="built_in">parseInt</span>(img.style.top)</span><br><span class="line">        el.style.position = <span class="string">'relative'</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 构建图片路径，通过canvas绘制再导出为base64图片</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">createImgContent</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">let</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>)</span><br><span class="line">          canvas.width = CANVAS_OPS.width</span><br><span class="line">          canvas.height = CANVAS_OPS.height</span><br><span class="line">          <span class="keyword">let</span> ctx = canvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line">          ctx.font = CANVAS_OPS.fontStyle</span><br><span class="line">          ctx.fillStyle = CANVAS_OPS.fillColor</span><br><span class="line">          ctx.textAlign = <span class="string">'center'</span></span><br><span class="line">          ctx.textBaseline = <span class="string">'middle'</span></span><br><span class="line">          ctx.fillText(value, CANVAS_OPS.width / <span class="number">2</span>, CANVAS_OPS.height / <span class="number">2</span>)</span><br><span class="line">          <span class="keyword">return</span> canvas.toDataURL(<span class="string">'image/png'</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 构建图片</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">createImgObj</span>(<span class="params">el, imgSrc</span>) </span>&#123;</span><br><span class="line">          img = <span class="keyword">new</span> Image()</span><br><span class="line">          img.src = imgSrc</span><br><span class="line">          img.style.position = <span class="string">'absolute'</span></span><br><span class="line">          img.style.top = <span class="string">`<span class="subst">$&#123;el.clientHeight - CANVAS_OPS.height&#125;</span>px`</span></span><br><span class="line">          img.style.right = <span class="number">0</span></span><br><span class="line">          img.style.opacity = <span class="number">0.4</span></span><br><span class="line">          img.style.zIndex = <span class="number">1</span></span><br><span class="line">          img.id = <span class="string">'canvas-img'</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      el.$$scrollHandle = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> img = el.querySelector(<span class="string">'#canvas-img'</span>)</span><br><span class="line">        <span class="keyword">let</span> oTop = el.$$baseTop</span><br><span class="line">        img.style.top = <span class="string">`<span class="subst">$&#123;el.scrollTop + el.clientHeight - el.$$imgHeight&#125;</span>px`</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      el.$$createEleHandle(el, value)</span><br><span class="line"></span><br><span class="line">      el.addEventListener(<span class="string">'scroll'</span>, el.$$scrollHandle, <span class="literal">false</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    componentUpdated(el, &#123;value&#125;) &#123;</span><br><span class="line">      el.$$createEleHandle(el, value)</span><br><span class="line">    &#125;,</span><br><span class="line">    unbind(el) &#123;</span><br><span class="line">      el.removeEventListener(<span class="string">'scroll'</span>, el.$$scrollHandle)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/05/30/简单请求和复杂请求/" rel="next" title="简单请求和复杂请求">
+                <i class="fa fa-chevron-left"></i> 简单请求和复杂请求
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Suven</p>
+              <p class="site-description motion-element" itemprop="description">随手记录，随缘分享</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#VUE自定义指令"><span class="nav-number">1.</span> <span class="nav-text">VUE自定义指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码解析"><span class="nav-number">2.</span> <span class="nav-text">源码解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#功能块"><span class="nav-number">3.</span> <span class="nav-text">功能块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#点击复制"><span class="nav-number">3.1.</span> <span class="nav-text">点击复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长按事件"><span class="nav-number">3.2.</span> <span class="nav-text">长按事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防抖指令"><span class="nav-number">3.3.</span> <span class="nav-text">防抖指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片懒加载"><span class="nav-number">3.4.</span> <span class="nav-text">图片懒加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面水印"><span class="nav-number">3.5.</span> <span class="nav-text">页面水印</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Suven</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  <canvas id="bg_canvas"></canvas>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script>
+    let w, h;
+    const OPTIONS = {
+      speed: null,
+      color: null,
+      radius: 4,
+      lineWidth: 0.5,
+      distance: 150,
+    }
+
+    class Circle{
+      constructor(ctx){
+        this.ctx = ctx;
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.speed = OPTIONS.speed || 1;
+        this.color = OPTIONS.color || `rgba(200, 200, 200, 1)`;
+        this.radius = Math.floor(Math.random()*OPTIONS.radius) || Math.floor(Math.random()*2);
+        this.vector = {
+          x: Math.cos(Math.floor(Math.random()*360))*this.speed,
+          y: Math.sin(Math.floor(Math.random()*360))*this.speed
+        };
+      }
+
+      rule(){
+        if (this.x >= w || this.x <= 0){
+          this.vector.x *= -1;
+        }
+
+        if (this.y >= h || this.y <= 0) {
+          this.vector.y *= -1;
+        }
+
+        if (this.x > w) { this.x = w }
+        if (this.x < 0) { this.x = 0 }
+        if (this.y > h) { this.y = h }
+        if (this.y < 0) { this.y = 0 }
+      }
+
+      draw(){
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.restore();
+      }
+
+      update(){
+        this.rule();
+        this.x += this.vector.x;
+        this.y += this.vector.y;
+      }
+    }
+
+    var link = (circle, circles, ctx) => {
+      for (let i = 0; i < circles.length; i++) {
+        let distancex = Math.abs(circles[i].x - circle.x);
+        let distancey = Math.abs(circles[i].y - circle.y);
+        let distance = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
+        if (distance <= Math.floor((OPTIONS.distance/1920)*window.innerWidth)) {
+          ctx.lineWidth = OPTIONS.lineWidth || 0.5;
+          ctx.strokeStyle = `rgba(200, 200, 200, ${1-distance/Math.floor((250/1920)*window.innerWidth)})`;
+          ctx.beginPath();
+          ctx.moveTo(circle.x, circle.y);
+          ctx.lineTo(circles[i].x, circles[i].y);
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+    }
+
+    var initStage = (target) => {
+      const canvas = document.querySelector(target);
+      if (!canvas) {
+        console.error('请输入正确的canvas');
+        return ;
+      }
+      const ctx = canvas.getContext('2d');
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      let circles = [];
+      let drawCircle = new Circle();
+      for(let i = 0; i < 100; i++){
+        circles.push(new Circle(ctx))
+      }
+
+      (function run(){
+        ctx.clearRect(0,0,w,h);
+        circles.forEach(item => {
+          item.draw();
+          item.update();
+        })
+
+        circles.forEach(item => {
+          link(item, circles, ctx);
+        })
+        window.requestAnimationFrame(run);
+      })()
+    }
+
+    window.addEventListener('resize', ()=>{
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    })
+
+    initStage('#bg_canvas');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"react":{"opacityDefault":1},"log":false,"tagMode":false});</script></body>
+</html>
