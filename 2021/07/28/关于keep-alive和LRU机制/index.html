@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.0" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="随手记录，随缘分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="http://suven.cn/categories/index.html">
+<meta property="og:site_name" content="Suven&#39;s blog">
+<meta property="og:description" content="随手记录，随缘分享">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-27T08:20:32.869Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分类">
+<meta name="twitter:description" content="随手记录，随缘分享">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://suven.cn/categories/">
+
+
+
+
+
+  <title>关于keep-alive和LRU机制 | Suven's blog</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+    body{
+      min-height: 100vh;
+    }
+
+    #bg_canvas{
+      position: fixed;
+      display: block;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Suven's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://suven.cn/2021/07/28/关于keep-alive和LRU机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Suven">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Suven's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">关于keep-alive和LRU机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-07-28T21:31:02+08:00">2021-07-28</time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/框架/" itemprop="url" rel="index">
+                    <span itemprop="name">框架</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  关于keep-alive和LRU机制
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="关于keep-alive"><a href="#关于keep-alive" class="headerlink" title="关于keep-alive"></a>关于keep-alive</h1><p><a href="https://cn.vuejs.org/v2/api/#keep-alive" target="_blank" rel="noopener">keep-alive</a>是VUE的一个内部组件<br>正常的组件会经历VUE生命周期，在组件不被需要的时候会被进行销毁处理(路由切换, v-if, 动态路由等)。<br>但是当我们在组件切换的时候不希望状态被重置，重新渲染，就可以利用<code>keep-alive</code>。<code>keep-alive</code>会将不活动的组件实例缓存进内存，而不是直接进行销毁。它自身不会进行DOM渲染，也不会出现在组件的父组件链。</p>
+<blockquote>
+<p>需要注意的是，keep-alive 是用在<strong>其中一个直属子组件被开关的情形</strong>。如果其中有<code>v-for</code>则不会工作，或者如果有多个条件性的元素，keep-alive要求同时只能有一个子元素被渲染。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">data()&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    list: [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line">template: <span class="string">`</span></span><br><span class="line"><span class="string">  &lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;button @click="testHandle(0)"&gt;btn0&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;button @click="testHandle(2)"&gt;btn2&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;keep-alive&gt;</span></span><br><span class="line"><span class="string">      &lt;comp1 v-for="item in list"&gt;&lt;/comp1&gt;</span></span><br><span class="line"><span class="string">    &lt;/keep-alive&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">`</span>,</span><br><span class="line">components: &#123;</span><br><span class="line">  comp1,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>上面的代码，comp1组件在keep-alive里做了遍历，但是最终渲染到UI上的只有一个comp1</p>
+<p>来看下源码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> KeepAlive = &#123;</span><br><span class="line">  name: <span class="string">'keep-alive'</span>,</span><br><span class="line">  abstract: <span class="literal">true</span>,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// keep-alive支持的三个属性</span></span><br><span class="line">  props: &#123;</span><br><span class="line">    include: patternTypes,</span><br><span class="line">    exclude: patternTypes,</span><br><span class="line">    max: [<span class="built_in">String</span>, <span class="built_in">Number</span>]</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建缓存</span></span><br><span class="line">  created: <span class="function"><span class="keyword">function</span> <span class="title">created</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.cache = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line">    <span class="keyword">this</span>.keys = [];</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// pruneCacheEntry的方法主要作用在把当前key从缓存队列中移除</span></span><br><span class="line">  <span class="comment">// 这里的作用是在keep-alive组件销毁的时候把缓存清空</span></span><br><span class="line">  destroyed: <span class="function"><span class="keyword">function</span> <span class="title">destroyed</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> <span class="keyword">this</span>.cache) &#123;</span><br><span class="line">      pruneCacheEntry(<span class="keyword">this</span>.cache, key, <span class="keyword">this</span>.keys);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 对include和exclude进行观测处理。这里可以理解，include/exclude是属于传入属性，当属性发生变更的话需要重新进行缓存策略</span></span><br><span class="line">  mounted: <span class="function"><span class="keyword">function</span> <span class="title">mounted</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">this</span>$<span class="number">1</span> = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.$watch(<span class="string">'include'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span><br><span class="line">      pruneCache(<span class="keyword">this</span>$<span class="number">1</span>, <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123; <span class="keyword">return</span> matches(val, name); &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">this</span>.$watch(<span class="string">'exclude'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span><br><span class="line">      pruneCache(<span class="keyword">this</span>$<span class="number">1</span>, <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123; <span class="keyword">return</span> !matches(val, name); &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  render: <span class="function"><span class="keyword">function</span> <span class="title">render</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 取插槽节点, 可参考方法 resolveSlots()</span></span><br><span class="line">    <span class="keyword">var</span> slot = <span class="keyword">this</span>.$slots.default;</span><br><span class="line">    <span class="comment">// 取插槽中第一个组件节点。也是印证了keep-alive只对第一个插槽节点生效</span></span><br><span class="line">    <span class="keyword">var</span> vnode = getFirstComponentChild(slot);</span><br><span class="line">    <span class="keyword">var</span> componentOptions = vnode &amp;&amp; vnode.componentOptions;</span><br><span class="line">    <span class="keyword">if</span> (componentOptions) &#123;</span><br><span class="line">      <span class="comment">// 获取组件节点名即`name`属性，如果没有则获取组件的标签属性</span></span><br><span class="line">      <span class="keyword">var</span> name = getComponentName(componentOptions);</span><br><span class="line">      <span class="keyword">var</span> ref = <span class="keyword">this</span>;</span><br><span class="line">      <span class="keyword">var</span> include = ref.include;</span><br><span class="line">      <span class="keyword">var</span> exclude = ref.exclude;</span><br><span class="line">      <span class="comment">// 对included 和 excluded的处理，进行有条件的筛选。注: 如果不设置缓存策略是不会走这一步的</span></span><br><span class="line">      <span class="keyword">if</span> (</span><br><span class="line">        (include &amp;&amp; (!name || !matches(include, name))) ||</span><br><span class="line">        (exclude &amp;&amp; name &amp;&amp; matches(exclude, name))</span><br><span class="line">      ) &#123;</span><br><span class="line">        <span class="keyword">return</span> vnode</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> ref$<span class="number">1</span> = <span class="keyword">this</span>;</span><br><span class="line">      <span class="keyword">var</span> cache = ref$<span class="number">1.</span>cache;</span><br><span class="line">      <span class="keyword">var</span> keys = ref$<span class="number">1.</span>keys;</span><br><span class="line">      <span class="comment">// 获取节点的key</span></span><br><span class="line">      <span class="keyword">var</span> key = vnode.key == <span class="literal">null</span></span><br><span class="line">        ? componentOptions.Ctor.cid + (componentOptions.tag ? (<span class="string">"::"</span> + (componentOptions.tag)) : <span class="string">''</span>)</span><br><span class="line">        : vnode.key;</span><br><span class="line">      <span class="comment">// 如果缓存中存在当前key对应的组件，则从缓存队列中把当前属性取出来，再重新加入队尾</span></span><br><span class="line">      <span class="keyword">if</span> (cache[key]) &#123;</span><br><span class="line">        vnode.componentInstance = cache[key].componentInstance;</span><br><span class="line">        remove(keys, key);</span><br><span class="line">        keys.push(key);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 如果缓存中不存在，则表明是新组件节点，把它直接加入到缓存队尾</span></span><br><span class="line">        cache[key] = vnode;</span><br><span class="line">        keys.push(key);</span><br><span class="line">        <span class="comment">// 重点： 如果匹配了max，并且缓存的长度超出了max，则把缓存队列的队头组件给移除</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.max &amp;&amp; keys.length &gt; <span class="built_in">parseInt</span>(<span class="keyword">this</span>.max)) &#123;</span><br><span class="line">          pruneCacheEntry(cache, keys[<span class="number">0</span>], keys, <span class="keyword">this</span>._vnode);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      vnode.data.keepAlive = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> vnode || (slot &amp;&amp; slot[<span class="number">0</span>])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pruneCache</span> (<span class="params">keepAliveInstance, filter</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> cache = keepAliveInstance.cache;</span><br><span class="line">  <span class="keyword">var</span> keys = keepAliveInstance.keys;</span><br><span class="line">  <span class="keyword">var</span> _vnode = keepAliveInstance._vnode;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> cache) &#123;</span><br><span class="line">    <span class="keyword">var</span> cachedNode = cache[key];</span><br><span class="line">    <span class="keyword">if</span> (cachedNode) &#123;</span><br><span class="line">      <span class="keyword">var</span> name = getComponentName(cachedNode.componentOptions);</span><br><span class="line">      <span class="keyword">if</span> (name &amp;&amp; !filter(name)) &#123;</span><br><span class="line">        pruneCacheEntry(cache, key, keys, _vnode);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">pruneCacheEntry</span> (<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  cache,</span></span></span><br><span class="line"><span class="function"><span class="params">  key,</span></span></span><br><span class="line"><span class="function"><span class="params">  keys,</span></span></span><br><span class="line"><span class="function"><span class="params">  current</span></span></span><br><span class="line"><span class="function"><span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> cached = cache[key];</span><br><span class="line">  <span class="keyword">if</span> (cached &amp;&amp; (!current || cached.tag !== current.tag)) &#123;</span><br><span class="line">    cached.componentInstance.$destroy();</span><br><span class="line">  &#125;</span><br><span class="line">  cache[key] = <span class="literal">null</span>;</span><br><span class="line">  remove(keys, key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>pruneCache</code>函数的逻辑并不复杂。它遍历缓存队列，把里面缓存的每一个组件节点重新再和缓存策略进行匹配(<code>include</code>/<code>exclude</code>)，如若匹配不上，则从缓存之前移除 </p>
+<p><code>keep-alive</code>主体函数<code>render</code>函数中，主要作用就是进行缓存的逻辑<br>大概逻辑注释上已有说明。<br><code>keep-alive</code>对于缓存策略采用了LRU的缓存原则，初始创建的catch数组可以视之为一个队列。当命中队列中元素的时候，把当前元素从队列中取出，重新推到队尾。当需要移除缓存的时候，先从队头进行移除。<br>由于之前的操作导致队形中越靠近队尾的元素都是距离操作时间越近的元素，移除队头元素即是把距离操作时间最远的元素移除掉，这很符合LRU的原则</p>
+<h1 id="关于LRU"><a href="#关于LRU" class="headerlink" title="关于LRU"></a>关于LRU</h1><blockquote>
+<p>LRU是Least Recently Used的缩写，即最近最少使用，是一种常用的页面置换算法，选择最近最久未使用的页面予以淘汰。该算法赋予每个页面一个访问字段，用来记录一个页面自上次被访问以来所经历的时间 t，当须淘汰一个页面时，选择现有页面中其 t 值最大的，即最近最少使用的页面予以淘汰。</p>
+</blockquote>
+<p>简单来说， LRU的思想即是最久没使用的元素，最先被从缓存内移除。<br>除了使用数组进行处理，同样可以使用ES6的新语法<code>Map</code>来进行处理。</p>
+<p><a href="https://leetcode-cn.com/problems/lru-cache/" target="_blank" rel="noopener">leedCode</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> LRUCache = <span class="function"><span class="keyword">function</span>(<span class="params">capacity</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个map结构</span></span><br><span class="line">    <span class="keyword">this</span>.map = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">    <span class="comment">// 最大缓存量</span></span><br><span class="line">    <span class="keyword">this</span>.len = capacity</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">LRUCache.prototype.get = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 无值返回-1</span></span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span>.map.has(key)) <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">    <span class="comment">// 执行更新</span></span><br><span class="line">    <span class="keyword">this</span>.update(key)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.map.get(key)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">LRUCache.prototype.put = <span class="function"><span class="keyword">function</span>(<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 如果是新增状态的话，要判断下长度，如果满了，删除头一个</span></span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span>.map.has(key) &amp;&amp; <span class="keyword">this</span>.map.size === <span class="keyword">this</span>.len) &#123;</span><br><span class="line">        <span class="comment">// 移除头一个</span></span><br><span class="line">        <span class="keyword">this</span>.remove(<span class="keyword">this</span>.map.keys().next().value)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 执行更新</span></span><br><span class="line">    <span class="keyword">this</span>.update(key, value)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">LRUCache.prototype.remove = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 从hash中删除</span></span><br><span class="line">    <span class="keyword">this</span>.map.delete(key)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新操作，先从hash列表中移除，再进行重新设值，确认最新更新的key-value是在map的底部</span></span><br><span class="line"><span class="comment">// 如果超过最大缓存量，则从hash中移除头一个</span></span><br><span class="line">LRUCache.prototype.update = <span class="function"><span class="keyword">function</span>(<span class="params">key, value = this.map.get(key</span>)) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.remove(key)</span><br><span class="line">    <span class="keyword">this</span>.map.set(key, value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag"># 前端</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/07/28/VUE对Array变化的观测/" rel="next" title="VUE对Array变化的观测">
+                <i class="fa fa-chevron-left"></i> VUE对Array变化的观测
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Suven</p>
+              <p class="site-description motion-element" itemprop="description">随手记录，随缘分享</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于keep-alive"><span class="nav-number">1.</span> <span class="nav-text">关于keep-alive</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于LRU"><span class="nav-number">2.</span> <span class="nav-text">关于LRU</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Suven</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  <canvas id="bg_canvas"></canvas>
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <script>
+    let w, h;
+    const OPTIONS = {
+      speed: null,
+      color: null,
+      radius: 4,
+      lineWidth: 0.5,
+      distance: 150,
+    }
+
+    class Circle{
+      constructor(ctx){
+        this.ctx = ctx;
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.speed = OPTIONS.speed || 1;
+        this.color = OPTIONS.color || `rgba(200, 200, 200, 1)`;
+        this.radius = Math.floor(Math.random()*OPTIONS.radius) || Math.floor(Math.random()*2);
+        this.vector = {
+          x: Math.cos(Math.floor(Math.random()*360))*this.speed,
+          y: Math.sin(Math.floor(Math.random()*360))*this.speed
+        };
+      }
+
+      rule(){
+        if (this.x >= w || this.x <= 0){
+          this.vector.x *= -1;
+        }
+
+        if (this.y >= h || this.y <= 0) {
+          this.vector.y *= -1;
+        }
+
+        if (this.x > w) { this.x = w }
+        if (this.x < 0) { this.x = 0 }
+        if (this.y > h) { this.y = h }
+        if (this.y < 0) { this.y = 0 }
+      }
+
+      draw(){
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+        this.ctx.closePath();
+        this.ctx.restore();
+      }
+
+      update(){
+        this.rule();
+        this.x += this.vector.x;
+        this.y += this.vector.y;
+      }
+    }
+
+    var link = (circle, circles, ctx) => {
+      for (let i = 0; i < circles.length; i++) {
+        let distancex = Math.abs(circles[i].x - circle.x);
+        let distancey = Math.abs(circles[i].y - circle.y);
+        let distance = Math.sqrt(Math.pow(distancex, 2) + Math.pow(distancey, 2));
+        if (distance <= Math.floor((OPTIONS.distance/1920)*window.innerWidth)) {
+          ctx.lineWidth = OPTIONS.lineWidth || 0.5;
+          ctx.strokeStyle = `rgba(200, 200, 200, ${1-distance/Math.floor((250/1920)*window.innerWidth)})`;
+          ctx.beginPath();
+          ctx.moveTo(circle.x, circle.y);
+          ctx.lineTo(circles[i].x, circles[i].y);
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+    }
+
+    var initStage = (target) => {
+      const canvas = document.querySelector(target);
+      if (!canvas) {
+        console.error('请输入正确的canvas');
+        return ;
+      }
+      const ctx = canvas.getContext('2d');
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      let circles = [];
+      let drawCircle = new Circle();
+      for(let i = 0; i < 100; i++){
+        circles.push(new Circle(ctx))
+      }
+
+      (function run(){
+        ctx.clearRect(0,0,w,h);
+        circles.forEach(item => {
+          item.draw();
+          item.update();
+        })
+
+        circles.forEach(item => {
+          link(item, circles, ctx);
+        })
+        window.requestAnimationFrame(run);
+      })()
+    }
+
+    window.addEventListener('resize', ()=>{
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    })
+
+    initStage('#bg_canvas');
+  </script>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"react":{"opacityDefault":1},"log":false,"tagMode":false});</script></body>
+</html>
