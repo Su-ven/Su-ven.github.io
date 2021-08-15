@@ -748,7 +748,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2021/07/20/x的平方根/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2021/07/20/x的平方根/" itemprop="url">x的平方根</a></h1>
         
 
         <div class="post-meta">
@@ -768,6 +768,39 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -797,21 +830,14 @@
 
       
         
-          
-            <hr>
-<p>title: x的平方根<br>date: 2021-07-20 21:00:29<br>tags: </p>
-<pre><code>- 前端
-- 算法
-- 面试
-- 二分
-</code></pre><p>categories: </p>
-<pre><code>- 前端 
-- 算法
-</code></pre><p>description: ‘x的平方根’</p>
-<p><a href="https://leetcode-cn.com/problems/sqrtx/" target="_blank" rel="noopener">x的平方根</a></p>
-<p>思路: x为非负整数，那么就很适合使用二分法进行求值，非负整数的平方根必定是小于或者等于该数的<br>以0到目标值作为区间，如果中间值比目标值小，说明目标区间在左，那让中间作为下次运算的左起点<br>否则在右边，让中间作为下次运算的右起点 </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mySqrt = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> left = <span class="number">0</span>, right = x</span><br><span class="line">    <span class="keyword">while</span>(left&lt;right) &#123;</span><br><span class="line">        <span class="keyword">let</span> mid = <span class="built_in">Math</span>.floor((left + right + <span class="number">1</span>)/<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">Math</span>.pow(mid, <span class="number">2</span>) &lt;= x) &#123;</span><br><span class="line">            left = mid</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right = mid <span class="number">-1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> right</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-          
+          x的平方根
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2021/07/20/x的平方根/">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
